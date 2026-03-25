@@ -1,0 +1,35 @@
+$ next build
+⚠ Invalid next.config.js options detected: 
+⚠     Unrecognized key(s) in object: 'appDir' at "experimental"
+⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/lulfex/Documents/DEV/Study/portofolio_auto/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /home/lulfex/Documents/DEV/Study/portofolio_auto/package-lock.json
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  ? appDir (invalid experimental key)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1858ms
+  Running TypeScript ...
+
+  We detected TypeScript in your project and created a tsconfig.json file for you.
+Failed to type check.
+
+./src/app/loading.tsx:20:44
+Type error: Property 'colors' does not exist on type 'DefaultTheme'.
+
+  [90m18 |[0m [32m  width: 40px;[0m
+  [90m19 |[0m [32m  height: 40px;[0m
+[31m[1m>[0m [90m20 |[0m [32m  border: 4px solid [0m${props => props.theme.colors.secondary[32m};[0m
+  [90m   |[0m                                            [31m[1m^[0m
+  [90m21 |[0m [32m  border-top: 4px solid [0m${props => props.theme.colors.primary[32m};[0m
+  [90m22 |[0m [32m  border-radius: 50%;[0m
+  [90m23 |[0m [32m  animation: [0m${spin[32m} 1s linear infinite;[0m
+Next.js build worker exited with code: 1 and signal: null
+error: script "build" exited with code 1
