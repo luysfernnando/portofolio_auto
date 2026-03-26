@@ -1,10 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Stable 16+ Configuration
   cacheComponents: true,
   reactCompiler: true,
   compiler: {
-    styledComponents: true,
+    styledComponents: {
+      ssr: true,
+      minify: true,
+      pure: true,
+      displayName: false,
+    },
+    // Remove console.log em produção (mantém avisos e erros)
+    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -25,7 +31,11 @@ const nextConfig = {
       'react-icons/io',
       'react-icons/lu',
       'framer-motion',
-      'styled-components'
+      'styled-components',
+      'lodash',
+      'axios',
+      '@octokit/rest',
+      'react-intersection-observer'
     ],
     staleTimes: {
       dynamic: 30, // 30s cache for dynamic routes
@@ -33,6 +43,7 @@ const nextConfig = {
     },
     inlineCss: true, // Inline critical CSS for faster FCP
     viewTransition: true, // Smooth page transitions
+    serverSourceMaps: false, // Reduz o tamanho dos artefatos de build
   },
 }
 
