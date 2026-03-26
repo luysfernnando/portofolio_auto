@@ -1,4 +1,5 @@
 import { Octokit } from '@octokit/rest';
+import { cacheLife, cacheTag } from 'next/cache';
 import { GitHubUser, Project, Repository } from '../types';
 
 // Configure o token do GitHub aqui (opcional, mas recomendado para evitar rate limits)
@@ -202,22 +203,31 @@ export class GitHubService {
   }
 }
 
-import { unstable_cache } from 'next/cache';
 
-export const getCachedUserInfo = unstable_cache(
-  async () => GitHubService.getUserInfo(),
-  ['github-user-info'],
-  { revalidate: 86400 } // Cache por 24 horas
-);
 
-export const getCachedProjects = unstable_cache(
-  async () => GitHubService.getProjects(),
-  ['github-projects'],
-  { revalidate: 86400 } // Cache por 24 horas
-);
+export async function getCachedUserInfo(): Promise<GitHubUser> {
+  "use cache";
+  cacheLife("weeks");
+  cacheTag("github", "github-user");
+  return GitHubService.getUserInfo();
+}
 
-export const getCachedStats = unstable_cache(
-  async () => GitHubService.getGitHubStats(),
-  ['github-stats'],
-  { revalidate: 86400 } // Cache por 24 horas
-);
+export async function getCachedProjects(): Promise<Project[]> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("github", "github-projects");
+  return GitHubService.getProjects();
+}
+
+export async function getCachedStats(): Promise<{
+  totalStars: number;
+  totalForks: number;
+  totalRepositories: number;
+  totalCommits: number;
+}> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("github", "github-stats");
+  return GitHubService.getGitHubStats();
+}
+

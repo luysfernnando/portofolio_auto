@@ -365,14 +365,12 @@ interface ProjectsProps {
   projects: Project[];
   loading: boolean;
   error: string | null;
-  onRefresh: () => void;
 }
 
 export const Projects: React.FC<ProjectsProps> = ({
   projects,
   loading,
   error,
-  onRefresh
 }) => {
 
   const [ref, inView] = useInView({
@@ -456,9 +454,6 @@ export const Projects: React.FC<ProjectsProps> = ({
           <SectionTitle>Meus Projetos</SectionTitle>
           <ErrorState>
             <p>{error}</p>
-            <Button onClick={onRefresh} $variant="primary">
-              Tentar Novamente
-            </Button>
           </ErrorState>
         </Container>
       </Section>
@@ -496,6 +491,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                   </FilterButton>
                 ))}
               </FilterSection>
+
             </motion.div>
 
             {filteredProjects.length === 0 ? (
