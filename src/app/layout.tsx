@@ -87,6 +87,9 @@ export const viewport: Viewport = {
   themeColor: '#000000',
 };
 
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${jetbrains.variable}`}>
@@ -104,7 +107,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
           </AppProviders>
         </StyledComponentsRegistry>
+        {process.env.NODE_ENV !== 'development' && (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   );
 }
+
