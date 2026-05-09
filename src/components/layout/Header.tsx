@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Mail, Menu, Moon, Sun, X } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
-const HeaderContainer = styled(motion.header) <{ scrolled: boolean }>`
+const HeaderContainer = styled(motion.header) <{ $scrolled: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -16,7 +16,7 @@ const HeaderContainer = styled(motion.header) <{ scrolled: boolean }>`
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   transition: all 0.3s ease;
 
-  ${({ scrolled, theme }) => scrolled && `
+  ${({ $scrolled, theme }) => $scrolled && `
     background: ${theme.colors.overlay};
     box-shadow: 0 1rem 2rem ${theme.colors.shadow};
   `}
@@ -198,9 +198,8 @@ const MobileSocialLinks = styled.div`
 
 const navItems = [
   { label: 'Inicio', id: 'home' },
-  { label: 'Perfil', id: 'perfil' },
-  { label: 'Electios', id: 'electios' },
   { label: 'Experiencia', id: 'experiencia' },
+  { label: 'Projetos', id: 'electios' },
   { label: 'Contato', id: 'contact' },
 ];
 
@@ -228,7 +227,7 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <HeaderContainer scrolled={scrolled}>
+      <HeaderContainer $scrolled={scrolled}>
         <Nav aria-label="Navegacao principal">
           <Logo onClick={() => scrollToSection('home')} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }} aria-label="Ir para o inicio">
             <strong>Luys Fernnando</strong>
@@ -250,9 +249,6 @@ export const Header: React.FC = () => {
               </SocialLink>
               <SocialLink href="https://linkedin.com/in/luysfernnando" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} aria-label="LinkedIn de Luys Fernnando">
                 <FaLinkedin size={18} />
-              </SocialLink>
-              <SocialLink href="mailto:contato@luysfernnando.dev" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} aria-label="Enviar email para Luys Fernnando">
-                <Mail size={18} />
               </SocialLink>
             </SocialLinks>
 
@@ -281,9 +277,6 @@ export const Header: React.FC = () => {
               </SocialLink>
               <SocialLink href="https://linkedin.com/in/luysfernnando" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Luys Fernnando">
                 <FaLinkedin size={22} />
-              </SocialLink>
-              <SocialLink href="mailto:contato@luysfernnando.dev" aria-label="Enviar email para Luys Fernnando">
-                <Mail size={22} />
               </SocialLink>
             </MobileSocialLinks>
           </MobileMenu>

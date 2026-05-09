@@ -1,10 +1,9 @@
 "use client";
 import { motion } from 'framer-motion';
-import { Calendar, Code2, MapPin, ShieldCheck } from 'lucide-react';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
-import { Container, Section, SectionTitle, Badge } from '../../styles/GlobalStyle';
+import { Container, Section } from '../../styles/GlobalStyle';
 
 interface ExperienceItemData {
   title: string;
@@ -89,83 +88,53 @@ const experiences: ExperienceItemData[] = [
   },
 ];
 
-const ProfileGrid = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: 3rem;
-  align-items: start;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
+/* Stack block */
+const StackBlock = styled(motion.div)`
+  padding-bottom: 4rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  margin-bottom: 5rem;
 `;
 
-const ProfileCard = styled(motion.article)`
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 1.75rem;
-  padding: 1.5rem;
-  background: ${({ theme }) => theme.colors.surface};
-  box-shadow: 0 1.5rem 3rem ${({ theme }) => theme.colors.shadow};
-`;
-
-const Lead = styled.p`
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 1.12rem;
-  line-height: 1.75;
-  margin-bottom: 1.5rem;
-`;
-
-const InfoGrid = styled.div`
-  display: grid;
-  gap: 0.75rem;
-`;
-
-const InfoItem = styled.div`
+const StackTable = styled.div`
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.9rem 0;
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.textSecondary};
-
-  svg {
-    color: ${({ theme }) => theme.colors.accent};
-    flex-shrink: 0;
-  }
-
-  strong {
-    color: ${({ theme }) => theme.colors.text};
-  }
+  flex-direction: column;
 `;
 
-const StackPanel = styled(motion.div)`
+const StackRow = styled.div`
   display: grid;
+  grid-template-columns: 11rem 1fr;
   gap: 1rem;
-`;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 
-const StackGroup = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 1.25rem;
-  padding: 1.25rem;
-  background: ${({ theme }) => theme.colors.surface};
+  &:first-child {
+    border-top: 1px solid ${({ theme }) => theme.colors.border};
+  }
 
-  h3 {
-    font-family: 'IBM Plex Sans', 'Aptos', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0;
-    margin-bottom: 1rem;
+  @media (max-width: 580px) {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
   }
 `;
 
-const BadgeRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+const StackCat = styled.span`
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  padding-top: 0.1rem;
 `;
 
-const ExperienceSection = styled.div`
-  margin-top: 5rem;
+const StackTechList = styled.span`
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.text};
+  line-height: 1.6;
 `;
+
+/* Experience section */
+const ExperienceSection = styled.div``;
 
 const ExperienceHeader = styled.div`
   margin-bottom: 2rem;
@@ -240,7 +209,7 @@ const ExperienceCard = styled(motion.article)`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 1.5rem;
   background:
-    radial-gradient(circle at top right, ${({ theme }) => theme.colors.accent}12, transparent 18rem),
+    radial-gradient(circle at top right, ${({ theme }) => theme.colors.accent}0e, transparent 18rem),
     ${({ theme }) => theme.colors.surface};
   box-shadow: 0 1.25rem 2.5rem ${({ theme }) => theme.colors.shadow};
   overflow: hidden;
@@ -319,17 +288,22 @@ const TimelineContent = styled.div`
   }
 `;
 
-const Company = styled.div`
-  color: ${({ theme }) => theme.colors.secondary};
-  font-weight: 800;
-  letter-spacing: 0.08em;
+const RoleLabel = styled.div`
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-size: 0.78rem;
-  margin-bottom: 0.5rem;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  margin-bottom: 0.4rem;
 `;
 
-const JobTitle = styled.h3`
-  font-size: clamp(1.65rem, 3vw, 2.35rem);
+const Company = styled.h3`
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: ${({ theme }) => theme.colors.primary};
+  line-height: 1.1;
+  letter-spacing: -0.01em;
   margin-bottom: 1rem;
 `;
 
@@ -358,6 +332,14 @@ const DescriptionList = styled.ul`
   }
 `;
 
+const TechLine = styled.p`
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
+  font-size: 0.78rem;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  margin: 0;
+  line-height: 1.6;
+`;
+
 export const About: React.FC = () => {
   const [ref] = useInView({ triggerOnce: true, threshold: 0.12 });
 
@@ -382,50 +364,19 @@ export const About: React.FC = () => {
   };
 
   return (
-    <Section id="perfil" ref={ref} aria-labelledby="perfil-title">
+    <Section id="perfil" ref={ref} aria-labelledby="experiencia-title">
       <Container>
         <motion.div variants={containerVariants} initial={false} animate="visible">
-          <ProfileGrid>
-            <ProfileCard variants={itemVariants}>
-              <SectionTitle id="perfil-title" variants={itemVariants}>
-                Perfil
-              </SectionTitle>
-              <Lead>
-                Desenvolvedor Full Stack com repertorio em sistemas de missao critica, produtos SaaS e plataformas digitais para o setor publico. O trabalho combina entrega pragmatica, leitura de contexto institucional e cuidado com operacao real.
-              </Lead>
-              <InfoGrid>
-                <InfoItem>
-                  <MapPin size={18} />
-                  <span><strong>Base:</strong> Goiânia-GO</span>
-                </InfoItem>
-                <InfoItem>
-                  <Calendar size={18} />
-                  <span><strong>Experiencia:</strong> 7+ anos</span>
-                </InfoItem>
-                <InfoItem>
-                  <ShieldCheck size={18} />
-                  <span><strong>Dominio:</strong> sistemas publicos criticos</span>
-                </InfoItem>
-                <InfoItem>
-                  <Code2 size={18} />
-                  <span><strong>Atuacao:</strong> produto, backend, frontend e infraestrutura</span>
-                </InfoItem>
-              </InfoGrid>
-            </ProfileCard>
-
-            <StackPanel id="stack" variants={itemVariants} aria-label="Stack tecnico">
+          <StackBlock variants={itemVariants}>
+            <StackTable>
               {stackGroups.map((group) => (
-                <StackGroup key={group.title}>
-                  <h3>{group.title}</h3>
-                  <BadgeRow>
-                    {group.items.map((item) => (
-                      <Badge key={item}>{item}</Badge>
-                    ))}
-                  </BadgeRow>
-                </StackGroup>
+                <StackRow key={group.title}>
+                  <StackCat>{group.title}</StackCat>
+                  <StackTechList>{group.items.join(' · ')}</StackTechList>
+                </StackRow>
               ))}
-            </StackPanel>
-          </ProfileGrid>
+            </StackTable>
+          </StackBlock>
 
           <ExperienceSection id="experiencia" aria-labelledby="experiencia-title">
             <ExperienceHeader>
@@ -461,23 +412,18 @@ export const About: React.FC = () => {
                     </SeniorityMetrics>
                   </DateRail>
                   <TimelineContent>
+                    <RoleLabel>{experience.title}</RoleLabel>
                     <Company>{experience.company}</Company>
-                    <JobTitle>{experience.title}</JobTitle>
                     <DescriptionList>
                       {experience.description.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </DescriptionList>
-                    <BadgeRow>
-                      {experience.technologies.map((tech) => (
-                        <Badge key={tech}>{tech}</Badge>
-                      ))}
-                    </BadgeRow>
+                    <TechLine>{experience.technologies.join(' · ')}</TechLine>
                   </TimelineContent>
                 </ExperienceCard>
               ))}
             </Timeline>
-
           </ExperienceSection>
         </motion.div>
       </Container>
