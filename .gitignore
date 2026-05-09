@@ -4,6 +4,8 @@
 .pnp.js
 .github
 .planning
+.sisyphus
+.playwright-mcp
 
 # Testing
 /coverage

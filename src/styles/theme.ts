@@ -3,34 +3,42 @@ import { Theme } from '../types';
 export const lightTheme: Theme = {
   isDark: false,
   colors: {
-    primary: '#2563eb',     // Blue-600
-    secondary: '#7c3aed',   // Violet-600
-    accent: '#06b6d4',      // Cyan-500
-    background: '#ffffff',   // White
-    surface: '#f8fafc',     // Slate-50
-    text: '#0f172a',        // Slate-900
-    textSecondary: '#64748b', // Slate-500
-    border: '#e2e8f0',      // Slate-200
-    success: '#10b981',     // Emerald-500
-    warning: '#f59e0b',     // Amber-500
-    error: '#ef4444',       // Red-500
+    primary: '#7A2E1D',
+    secondary: '#20382F',
+    accent: '#B88634',
+    background: '#F5F0E8',
+    surface: '#FFFDF8',
+    mutedSurface: '#E8DFD2',
+    text: '#171511',
+    textSecondary: '#6F665A',
+    border: '#D9CEC0',
+    inverse: '#FFFDF8',
+    overlay: '#F5F0E8CC',
+    shadow: '#17151124',
+    success: '#2F7D55',
+    warning: '#B88634',
+    error: '#A33A2B',
   },
 };
 
 export const darkTheme: Theme = {
   isDark: true,
   colors: {
-    primary: '#2563eb',     // Blue-600
-    secondary: '#8b5cf6',   // Violet-500
-    accent: '#06b6d4',      // Cyan-500
-    background: '#0f172a',  // Slate-900
-    surface: '#1e293b',     // Slate-800
-    text: '#f1f5f9',        // Slate-100
-    textSecondary: '#94a3b8', // Slate-400
-    border: '#334155',      // Slate-700
-    success: '#10b981',     // Emerald-500
-    warning: '#f59e0b',     // Amber-500
-    error: '#ef4444',       // Red-500
+    primary: '#D8795A',
+    secondary: '#9CC4AC',
+    accent: '#D6AA58',
+    background: '#11100E',
+    surface: '#1B1915',
+    mutedSurface: '#28231C',
+    text: '#F8F2EA',
+    textSecondary: '#E0D7CC',
+    border: '#383126',
+    inverse: '#11100E',
+    overlay: '#11100EE6',
+    shadow: '#00000066',
+    success: '#68B486',
+    warning: '#D6AA58',
+    error: '#E06B58',
   },
 };
 

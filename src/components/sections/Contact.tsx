@@ -309,8 +309,8 @@ export const Contact: React.FC = () => {
       setSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setSuccess(false), 6000);
-    } catch (err: any) {
-      setApiError(err.message || 'Algo deu errado. Tente novamente.');
+    } catch (err: unknown) {
+      setApiError(err instanceof Error ? err.message : 'Algo deu errado. Tente novamente.');
     } finally {
       setLoading(false);
     }
@@ -329,18 +329,17 @@ export const Contact: React.FC = () => {
     <Section id="contact" ref={ref}>
       <Container>
         <motion.div variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
-          <SectionTitle variants={childVariants}>Entre em Contato</SectionTitle>
+          <SectionTitle variants={childVariants}>Contato</SectionTitle>
 
           <ContactGrid>
             {/* Info Side */}
             <GlassCard variants={childVariants}>
               <InfoSection>
                 <Headline>
-                  Vamos <span>construir</span> juntos?
+                  Tem um sistema <span>critico</span> para evoluir?
                 </Headline>
                 <TagLine>
-                  Estou aberto a novas oportunidades, freelas e projetos interessantes.
-                  Manda uma mensagem, respondo rápido!
+                  Aberto a conversas sobre produtos digitais, sustentacao de sistemas e projetos que pedem responsabilidade tecnica.
                 </TagLine>
 
                 <ContactLinks>

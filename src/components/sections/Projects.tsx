@@ -1,544 +1,255 @@
 "use client";
-import { AnimatePresence, motion } from 'framer-motion';
-import { ExternalLink, Filter, GitFork, Star } from 'lucide-react';
-import React, { useState } from 'react';
-import { FaGithub } from 'react-icons/fa';
-import { useInView } from 'react-intersection-observer';
+import React from 'react';
 import styled from 'styled-components';
-import { Badge, Button, Card, Container, Section, SectionTitle } from '../../styles/GlobalStyle';
-import { Project } from '../../types';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Bell, Brain, Cloud, ExternalLink, Vote } from 'lucide-react';
+import { Container, Section, SectionTitle, Badge, Button } from '../../styles/GlobalStyle';
 
-const ProjectsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
+interface Capability {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+}
 
-const FilterSection = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
+const capabilities: Capability[] = [
+  {
+    title: 'Votacao em tempo real',
+    description: 'Acompanhamento de votos, filas e eventos de pleito com foco em confiabilidade operacional.',
+    icon: <Vote size={22} />,
+  },
+  {
+    title: 'Comunicacao multicanal',
+    description: 'Notificacoes por email, SMS e WhatsApp para orientar eleitores e equipes durante a jornada.',
+    icon: <Bell size={22} />,
+  },
+  {
+    title: 'Operacoes com IA',
+    description: 'Comandos em linguagem natural para apoiar rotinas administrativas e reduzir friccao operacional.',
+    icon: <Brain size={22} />,
+  },
+  {
+    title: 'Infraestrutura resiliente',
+    description: 'Oracle Cloud, PostgreSQL e Cloudflare compondo uma base segura para eventos sensiveis.',
+    icon: <Cloud size={22} />,
+  },
+];
+
+const ProjectsIntro = styled.div`
   margin-bottom: 2rem;
-  flex-wrap: wrap;
 `;
 
-const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  margin-top: 3rem;
+const CaseStudy = styled(motion.article)`
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 2rem;
+  background:
+    radial-gradient(circle at top right, ${({ theme }) => theme.colors.accent}22, transparent 24rem),
+    ${({ theme }) => theme.colors.surface};
+  box-shadow: 0 2rem 5rem ${({ theme }) => theme.colors.shadow};
+  overflow: hidden;
 `;
 
-const PageInfo = styled.span`
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-weight: 500;
-`;
-
-const FilterButton = styled(Button)<{ $active: boolean }>`
-  ${({ $active, theme }) => $active && `
-    background: ${theme.colors.primary};
-    color: white;
-  `}
-`;
-
-const ProjectsGrid = styled.div`
+const CaseHeader = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
   gap: 2rem;
+  padding: 2rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 
-  @media (max-width: 768px) {
+  @media (max-width: 860px) {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
   }
 `;
 
-const ProjectCard = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  
-  /* Glassmorphism & Iluminação */
-  background: ${({ theme }) => `${theme.colors.surface}B3`}; /* 70% opacity */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid ${({ theme }) => `${theme.colors.border}40`};
-  padding: 1.25rem; /* Diminuindo de 1.5rem pra 1.25rem */
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, ${({ theme }) => theme.colors.primary}1A 0%, transparent 60%),
-                radial-gradient(circle at bottom right, ${({ theme }) => theme.colors.accent}15 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-    transition: opacity 0.5s ease;
-    opacity: 0.6;
-  }
-
-  &:hover {
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
-    border: 1px solid ${({ theme }) => `${theme.colors.primary}66`};
-    
-    &::before {
-      opacity: 1;
-    }
-  }
-
-  /* Garante que o conteúdo fique acima do fundo luminoso */
-  > * {
-    z-index: 1;
-    position: relative;
-  }
-`;
-
-const ProjectImage = styled.div<{ $hasImage: boolean }>`
-  width: 100%;
-  height: 200px;
-  background: ${({ $hasImage, theme }) =>
-    $hasImage
-      ? 'transparent'
-      : `linear-gradient(135deg, ${theme.colors.primary}22, ${theme.colors.accent}22)`
-  };
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ProjectContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ProjectHeader = styled.div`
-  display: flex;
-  justify-content: between;
-  align-items: start;
+const Label = styled.div`
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   margin-bottom: 1rem;
 `;
 
 const ProjectTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.text};
-  margin-bottom: 0.5rem;
-  text-transform: capitalize;
-`;
-
-const ProjectStats = styled.div`
-  display: flex;
-  gap: 1rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 0.875rem;
+  font-size: clamp(2.4rem, 6vw, 5.8rem);
   margin-bottom: 1rem;
 `;
 
-const StatItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-`;
-
-const ProjectDescription = styled.p`
+const ProjectLead = styled.p`
   color: ${({ theme }) => theme.colors.textSecondary};
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  flex: 1;
+  font-size: 1.15rem;
+  line-height: 1.75;
+  margin: 0;
 `;
 
-const TechStack = styled.div`
+const MetricPanel = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.border};
+  border-radius: 1.25rem;
+  overflow: hidden;
+`;
+
+const Metric = styled.div`
+  padding: 1.25rem;
+  background: ${({ theme }) => theme.colors.background};
+
+  strong {
+    display: block;
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1;
+    color: ${({ theme }) => theme.colors.primary};
+    margin-bottom: 0.45rem;
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.textSecondary};
+    font-size: 0.85rem;
+  }
+`;
+
+const CapabilityGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: ${({ theme }) => theme.colors.border};
+
+  @media (max-width: 980px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 620px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const CapabilityCard = styled(motion.div)`
+  padding: 1.5rem;
+  min-height: 16rem;
+  background: ${({ theme }) => theme.colors.surface};
+
+  svg {
+    color: ${({ theme }) => theme.colors.accent};
+    margin-bottom: 1rem;
+  }
+
+  h4 {
+    font-family: 'IBM Plex Sans', 'Aptos', sans-serif;
+    letter-spacing: 0;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: ${({ theme }) => theme.colors.textSecondary};
+    margin: 0;
+  }
+`;
+
+const StackBand = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  gap: 0.65rem;
+  padding: 1.5rem 2rem 2rem;
 `;
 
-const ProjectActions = styled.div`
+const CaseActions = styled.div`
   display: flex;
-  gap: 1rem;
-  margin-top: auto;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
 `;
 
-const FeaturedBadge = styled(Badge)`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: ${({ theme }) => theme.colors.accent};
-  color: white;
-  z-index: 1;
-`;
-
-const LoadingState = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-`;
-
-const ErrorState = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 4rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  text-align: center;
-`;
-
-const EmptyState = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 4rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  text-align: center;
-`;
-
-const ProjectItem: React.FC<{ project: Project; itemVariants: any; index: number }> = ({ project, itemVariants, index }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  // Fecha format date local ou move pra util
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
-  };
-
-  return (
-    <motion.div
-      variants={itemVariants}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-      transition={{ delay: index * 0.1 }}
-      layout
-    >
-      <ProjectCard
-        onMouseEnter={() => setIsExpanded(true)}
-        onMouseLeave={() => setIsExpanded(false)}
-        onClick={() => setIsExpanded(!isExpanded)}
-        style={{ cursor: 'pointer' }}
-      >
-        {project.featured && (
-          <FeaturedBadge>Destaque</FeaturedBadge>
-        )}
-
-        <ProjectContent>
-          <ProjectHeader>
-            <div>
-              <ProjectTitle>{project.title}</ProjectTitle>
-              <ProjectStats>
-                <StatItem>
-                  <Star size={14} />
-                  {project.stars}
-                </StatItem>
-                <StatItem>
-                  <GitFork size={14} />
-                  {project.forks}
-                </StatItem>
-                <StatItem>
-                  Atualizado em {formatDate(project.lastUpdated)}
-                </StatItem>
-              </ProjectStats>
-            </div>
-          </ProjectHeader>
-
-          {/* Swap Area */}
-          <div style={{ position: 'relative', flex: 1, minHeight: '220px', overflow: 'hidden', width: '100%' }}>
-            
-            {/* Image */}
-            <AnimatePresence initial={false}>
-              {!isExpanded && (
-                <motion.div
-                  key="image"
-                  initial={{ y: -220, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -220, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ position: 'absolute', inset: 0 }}
-                >
-                  <ProjectImage $hasImage={!!project.imageUrl} style={{ height: '200px', marginBottom: 0 }}>
-                    {project.imageUrl ? (
-                      <img src={project.imageUrl} alt={project.title} />
-                    ) : (
-                      <div style={{
-                        fontSize: '3rem',
-                        opacity: 0.3,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '100%',
-                        height: '100%'
-                      }}>
-                        <FaGithub />
-                      </div>
-                    )}
-                  </ProjectImage>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Details */}
-            <AnimatePresence initial={false}>
-              {isExpanded && (
-                <motion.div
-                  key="details"
-                  initial={{ y: 220, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 220, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column' }}
-                >
-                  <ProjectDescription>
-                    {project.description}
-                  </ProjectDescription>
-
-                  <TechStack>
-                    {project.technologies.slice(0, 5).map((tech) => (
-                      <Badge key={tech}>{tech}</Badge>
-                    ))}
-                    {project.technologies.length > 5 && (
-                      <Badge>+{project.technologies.length - 5}</Badge>
-                    )}
-                  </TechStack>
-
-                  <ProjectActions>
-                    <Button
-                      as="a"
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      $variant="outline"
-                      $size="sm"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <FaGithub size={16} />
-                      Código
-                    </Button>
-
-                    {project.liveUrl && (
-                      <Button
-                        as="a"
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        $variant="primary"
-                        $size="sm"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <ExternalLink size={16} />
-                        Demo
-                      </Button>
-                    )}
-                  </ProjectActions>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-          </div>
-        </ProjectContent>
-      </ProjectCard>
-    </motion.div>
-  );
-};
-
-
-interface ProjectsProps {
-  projects: Project[];
-  loading: boolean;
-  error: string | null;
-}
-
-export const Projects: React.FC<ProjectsProps> = ({
-  projects,
-  loading,
-  error,
-}) => {
-
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const [filter, setFilter] = useState<'all' | 'featured' | 'recent'>('featured');
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-
-  const filterOptions = [
-    { key: 'all', label: 'Todos os Projetos' },
-    { key: 'featured', label: 'Projetos Destacados' },
-    { key: 'recent', label: 'Mais Recentes' },
-  ];
-
-  const getFilteredProjects = () => {
-    switch (filter) {
-      case 'featured':
-        return projects.filter(project => project.featured);
-      case 'recent':
-        return projects
-          .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime())
-          .slice(0, 6);
-      default:
-        return projects;
-    }
-  };
-
-  const filteredProjects = getFilteredProjects();
-
-  const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
-  const paginatedProjects = filteredProjects.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+export const Projects: React.FC = () => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.12 });
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.12,
+        delayChildren: 0.15,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 24, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.58, ease: 'easeOut' as const },
     },
   };
 
-  if (loading) {
-    return (
-      <Section id="projects">
-        <Container>
-          <SectionTitle>Meus Projetos</SectionTitle>
-          <LoadingState>
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-            >
-              Carregando projetos...
-            </motion.div>
-          </LoadingState>
-        </Container>
-      </Section>
-    );
-  }
-
-  if (error) {
-    return (
-      <Section id="projects">
-        <Container>
-          <SectionTitle>Meus Projetos</SectionTitle>
-          <ErrorState>
-            <p>{error}</p>
-          </ErrorState>
-        </Container>
-      </Section>
-    );
-  }
-
   return (
-    <Section id="projects" ref={ref}>
+    <Section id="electios" ref={ref} aria-labelledby="electios-title">
       <Container>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-        >
-          <SectionTitle variants={itemVariants}>
-            Meus Projetos
-          </SectionTitle>
+        <motion.div variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
+          <ProjectsIntro>
+            <SectionTitle id="electios-title" variants={itemVariants}>
+              Projeto principal
+            </SectionTitle>
+          </ProjectsIntro>
 
-          <ProjectsContainer>
-            <motion.div variants={itemVariants}>
-              <FilterSection>
-                {filterOptions.map((option) => (
-                  <FilterButton
-                    key={option.key}
-                    $active={filter === option.key}
-                    onClick={() => {
-                      setFilter(option.key as any);
-                      setCurrentPage(1);
-                    }}
-                    $variant="outline"
-                    $size="sm"
-                  >
-                    {option.key === 'featured' ? <Star size={16} /> : <Filter size={16} />}
-                    {option.label}
-                  </FilterButton>
-                ))}
-              </FilterSection>
-
-            </motion.div>
-
-            {filteredProjects.length === 0 ? (
-              <EmptyState>
-                <p>Nenhum projeto encontrado para o filtro selecionado.</p>
-              </EmptyState>
-            ) : (
-              <>
-                <ProjectsGrid>
-                  <AnimatePresence>
-                    {paginatedProjects.map((project, index) => (
-                    <ProjectItem 
-                      key={project.id} 
-                      project={project} 
-                      itemVariants={itemVariants} 
-                      index={index} 
-                    />
-                  ))}
-                </AnimatePresence>
-              </ProjectsGrid>
-
-              {totalPages > 1 && (
-                <PaginationContainer>
-                  <Button 
-                    $variant="outline" 
-                    $size="sm"
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                  >
-                    Anterior
+          <CaseStudy variants={itemVariants}>
+            <CaseHeader>
+              <div>
+                <Label>Case study · cofundador e desenvolvedor</Label>
+                <ProjectTitle>Electios</ProjectTitle>
+                <ProjectLead>
+                  Plataforma de eleicoes online utilizada por OAB GO, OAB MT, OAB RJ e outras instituicoes. O produto combina experiencia eleitoral, auditoria operacional, comunicacao em massa e automacoes inteligentes para pleitos com mais de 50 mil eleitores.
+                </ProjectLead>
+                <CaseActions>
+                  <Button as="a" href="https://electios.com.br" target="_blank" rel="noopener noreferrer" $variant="primary" $size="sm" aria-label="Abrir site do Electios">
+                    Conhecer Electios
+                    <ExternalLink size={16} />
                   </Button>
-                  <PageInfo>
-                    Página {currentPage} de {totalPages}
-                  </PageInfo>
-                  <Button 
-                    $variant="outline" 
-                    $size="sm"
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                  >
-                    Próxima
+                  <Button as="a" href="#contact" $variant="outline" $size="sm">
+                    Conversar sobre projetos criticos
                   </Button>
-                </PaginationContainer>
-              )}
-            </>
-            )}
-          </ProjectsContainer>
+                </CaseActions>
+              </div>
+              <MetricPanel aria-label="Indicadores do Electios">
+                <Metric>
+                  <strong>50k+</strong>
+                  <span>eleitores em pleitos operados</span>
+                </Metric>
+                <Metric>
+                  <strong>OAB</strong>
+                  <span>GO, MT, RJ e outras seccionais</span>
+                </Metric>
+                <Metric>
+                  <strong>IA</strong>
+                  <span>operacoes em linguagem natural</span>
+                </Metric>
+                <Metric>
+                  <strong>24/7</strong>
+                  <span>foco em disponibilidade e resposta</span>
+                </Metric>
+              </MetricPanel>
+            </CaseHeader>
+
+            <CapabilityGrid>
+              {capabilities.map((capability) => (
+                <CapabilityCard key={capability.title} variants={itemVariants}>
+                  {capability.icon}
+                  <h4>{capability.title}</h4>
+                  <p>{capability.description}</p>
+                </CapabilityCard>
+              ))}
+            </CapabilityGrid>
+
+            <StackBand aria-label="Stack tecnico do Electios">
+              {['Elixir', 'Phoenix', 'LiveView', 'Ash', 'PostgreSQL', 'Oracle Cloud', 'Cloudflare', 'Email', 'SMS', 'WhatsApp'].map((tech) => (
+                <Badge key={tech}>{tech}</Badge>
+              ))}
+            </StackBand>
+          </CaseStudy>
         </motion.div>
       </Container>
     </Section>

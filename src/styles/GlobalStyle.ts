@@ -11,29 +11,60 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
 
   html {
     scroll-behavior: smooth;
+    max-width: 100vw;
+    overflow-x: hidden;
+    background: ${({ theme }) => theme.colors.background};
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-                 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-                 'Helvetica Neue', sans-serif;
+    font-family: 'IBM Plex Sans', 'Aptos', 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: ${({ theme }) => theme.colors.background};
+    background:
+      radial-gradient(circle at top left, ${({ theme }) => theme.colors.accent}14, transparent 28rem),
+      linear-gradient(135deg, ${({ theme }) => theme.colors.background} 0%, ${({ theme }) => theme.colors.mutedSurface} 100%);
     color: ${({ theme }) => theme.colors.text};
     line-height: 1.6;
+    max-width: 100vw;
+    overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
+  .App,
+  main {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: ${({ theme }) => (theme.isDark ? 0.14 : 0.2)};
+    background-image:
+      linear-gradient(${({ theme }) => theme.colors.border} 1px, transparent 1px),
+      linear-gradient(90deg, ${({ theme }) => theme.colors.border} 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: linear-gradient(to bottom, black, transparent 72%);
+  }
+
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+
   code {
-    font-family: 'JetBrains Mono', 'Fira Code', source-code-pro, Menlo, Monaco,
-                 Consolas, 'Courier New', monospace;
+    font-family: 'JetBrains Mono', 'Fira Code', source-code-pro, Menlo, Monaco, Consolas, monospace;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    line-height: 1.2;
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 650;
+    line-height: 1.05;
     margin-bottom: 0.5em;
+    letter-spacing: -0.035em;
   }
 
   p {
@@ -44,10 +75,10 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     color: ${({ theme }) => theme.colors.primary};
     text-decoration: none;
     transition: all 0.2s ease;
+  }
 
-    &:hover {
-      opacity: 0.8;
-    }
+  a:hover {
+    opacity: 0.82;
   }
 
   button {
@@ -57,9 +88,8 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
     font-family: inherit;
   }
 
-  /* Scrollbar personalizada */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 0.5rem;
   }
 
   ::-webkit-scrollbar-track {
@@ -68,21 +98,20 @@ export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
 
   ::-webkit-scrollbar-thumb {
     background: ${({ theme }) => theme.colors.textSecondary};
-    border-radius: 4px;
+    border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: ${({ theme }) => theme.colors.text};
   }
 
-  /* Seleção de texto */
   ::selection {
-    background: ${({ theme }) => theme.colors.primary}33;
+    background: ${({ theme }) => theme.colors.accent}55;
   }
 `;
 
 export const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 1.5rem;
 
@@ -92,23 +121,32 @@ export const Container = styled.div`
 `;
 
 export const Section = styled.section`
-  padding: 5rem 0;
+  padding: 6rem 0;
 
   @media (max-width: 768px) {
-    padding: 3rem 0;
+    padding: 4rem 0;
   }
 `;
 
 export const SectionTitle = styled(motion.h2)`
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 3rem;
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  font-weight: 650;
+  text-align: left;
+  margin-bottom: 2rem;
   color: ${({ theme }) => theme.colors.text};
+  max-width: 12ch;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 4rem;
+    height: 1px;
+    margin-top: 1rem;
+    background: ${({ theme }) => theme.colors.accent};
+  }
 
   @media (max-width: 768px) {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -120,28 +158,34 @@ export const Button = styled.button<{
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-weight: 500;
-  border-radius: 0.5rem;
+  font-weight: 650;
+  border-radius: 999px;
   transition: all 0.2s ease;
   text-decoration: none;
+  letter-spacing: 0.01em;
+  max-width: 100%;
 
   ${({ $variant = 'primary', theme }) => {
     switch ($variant) {
       case 'primary':
         return `
-          background: ${theme.colors.primary};
-          color: white;
+          background: ${theme.colors.text};
+          color: ${theme.colors.inverse};
+          border: 1px solid ${theme.colors.text};
           &:hover {
-            background: ${theme.colors.primary}dd;
+            background: ${theme.colors.primary};
+            border-color: ${theme.colors.primary};
             transform: translateY(-1px);
           }
         `;
       case 'secondary':
         return `
           background: ${theme.colors.secondary};
-          color: white;
+          color: ${theme.colors.inverse};
+          border: 1px solid ${theme.colors.secondary};
           &:hover {
-            background: ${theme.colors.secondary}dd;
+            background: ${theme.colors.primary};
+            border-color: ${theme.colors.primary};
             transform: translateY(-1px);
           }
         `;
@@ -165,7 +209,7 @@ export const Button = styled.button<{
     switch ($size) {
       case 'sm':
         return `
-          padding: 0.5rem 1rem;
+          padding: 0.55rem 1rem;
           font-size: 0.875rem;
         `;
       case 'md':
@@ -175,8 +219,8 @@ export const Button = styled.button<{
         `;
       case 'lg':
         return `
-          padding: 1rem 2rem;
-          font-size: 1.125rem;
+          padding: 0.95rem 1.6rem;
+          font-size: 1rem;
         `;
     }
   }}
@@ -184,14 +228,15 @@ export const Button = styled.button<{
 
 export const Card = styled.div`
   background: ${({ theme }) => theme.colors.surface};
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   padding: 1.5rem;
   border: 1px solid ${({ theme }) => theme.colors.border};
+  box-shadow: 0 1.5rem 3rem ${({ theme }) => theme.colors.shadow};
   transition: all 0.3s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-0.25rem);
+    box-shadow: 0 2rem 4rem ${({ theme }) => theme.colors.shadow};
   }
 `;
 
@@ -227,11 +272,11 @@ export const Flex = styled.div<{
 
 export const Badge = styled.span<{ color?: string }>`
   display: inline-block;
-  padding: 0.25rem 0.75rem;
+  padding: 0.35rem 0.75rem;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 650;
   border-radius: 9999px;
-  background: ${({ color, theme }) => color || theme.colors.primary}22;
-  color: ${({ color, theme }) => color || theme.colors.primary};
-  border: 1px solid ${({ color, theme }) => (color || theme.colors.primary) + '44'};
+  background: ${({ color, theme }) => color || theme.colors.mutedSurface};
+  color: ${({ theme }) => theme.colors.text};
+  border: 1px solid ${({ color, theme }) => color || theme.colors.border};
 `;
