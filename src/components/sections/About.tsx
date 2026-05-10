@@ -4,6 +4,7 @@ import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
 import { Container, Section } from '../../styles/components';
+import { Technologies } from './Technologies';
 
 interface ExperienceItemData {
   title: string;
@@ -214,99 +215,90 @@ const TechLine = styled.p`
   line-height: 1.6;
 `;
 
-export const About: React.FC = () => {
-  const [ref] = useInView({ triggerOnce: true, threshold: 0.12 });
+const fadeUp = {
+  hidden: { y: 24, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.58, ease: 'easeOut' as const } },
+};
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.12,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 24, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.58, ease: 'easeOut' as const },
-    },
-  };
+const ExperienceItem: React.FC<{ experience: ExperienceItemData }> = ({ experience }) => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 });
 
   return (
-    <Section id="perfil" ref={ref} aria-labelledby="experiencia-title">
+    <ExperienceCard
+      ref={ref}
+      variants={fadeUp}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+    >
+      <TimelineContent>
+        <CardHeader>
+          <Company>{experience.company}</Company>
+          <CardMeta>
+            <RoleLabel>{experience.title}</RoleLabel>
+            <Period>{experience.period}</Period>
+          </CardMeta>
+        </CardHeader>
+        <DescriptionList>
+          {experience.description.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </DescriptionList>
+        <TechLine>{experience.technologies.join(' · ')}</TechLine>
+      </TimelineContent>
+    </ExperienceCard>
+  );
+};
+
+export const About: React.FC = () => {
+  const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.15 });
+
+  return (
+    <Section id="perfil" aria-labelledby="experiencia-title">
       <Container>
-        <motion.div variants={containerVariants} initial={false} animate="visible">
-          <StackBlock variants={itemVariants}>
-            <StackLayout>
-              <StackLeft>
-                <StackTitle variants={itemVariants}>
-                  Tecnologias
-                </StackTitle>
-                <StackTagline variants={itemVariants}>
-                  Algumas das ferramentas e linguagens que mais utilizo nos sistemas críticos, produtos digitais e infraestrutura de onde atuo.
-                </StackTagline>
-              </StackLeft>
-              <StackTable>
-                {stackGroups.map((group) => (
-                  <StackRow key={group.title}>
-                    <StackCat>{group.title}</StackCat>
-                    <StackTechList>{group.items.join(' · ')}</StackTechList>
-                  </StackRow>
-                ))}
-              </StackTable>
-            </StackLayout>
-          </StackBlock>
+        <Technologies />
 
-          <ExperienceSection id="experiencia" aria-labelledby="experiencia-title">
-            <ExperienceHeader>
-              <ExperienceTitle id="experiencia-title" variants={itemVariants}>
-                Linha do tempo profissional
-              </ExperienceTitle>
-            </ExperienceHeader>
+        <ExperienceSection id="experiencia" aria-labelledby="experiencia-title">
+          <ExperienceHeader
+            ref={headerRef}
+            variants={fadeUp}
+            initial="hidden"
+            animate={headerInView ? 'visible' : 'hidden'}
+          >
+            <ExperienceTitle id="experiencia-title">
+              Linha do tempo profissional
+            </ExperienceTitle>
+          </ExperienceHeader>
 
-            <TimelineStats variants={itemVariants} aria-label="Resumo de senioridade">
-              <TimelineStat>
-                <strong>7+</strong>
-                <span>anos em software full stack</span>
-              </TimelineStat>
-              <TimelineStat>
-                <strong>100+</strong>
-                <span>sistemas sustentados no TRE-GO</span>
-              </TimelineStat>
-              <TimelineStat>
-                <strong>10+</strong>
-                <span>portais publicos automatizados</span>
-              </TimelineStat>
-            </TimelineStats>
+          <TimelineStats
+            variants={fadeUp}
+            initial="hidden"
+            animate={headerInView ? 'visible' : 'hidden'}
+            transition={{ delay: 0.1 }}
+            aria-label="Resumo de senioridade"
+          >
+            <TimelineStat>
+              <strong>7+</strong>
+              <span>anos em software full stack</span>
+            </TimelineStat>
+            <TimelineStat>
+              <strong>100+</strong>
+              <span>sistemas sustentados no TRE-GO</span>
+            </TimelineStat>
+            <TimelineStat>
+              <strong>10+</strong>
+              <span>portais publicos automatizados</span>
+            </TimelineStat>
+          </TimelineStats>
 
-            <Timeline>
-              {experiences.map((experience) => (
-                <ExperienceCard key={`${experience.company}-${experience.period}`} variants={itemVariants}>
-                  <TimelineContent>
-                    <CardHeader>
-                      <Company>{experience.company}</Company>
-                      <CardMeta>
-                        <RoleLabel>{experience.title}</RoleLabel>
-                        <Period>{experience.period}</Period>
-                      </CardMeta>
-                    </CardHeader>
-                    <DescriptionList>
-                      {experience.description.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </DescriptionList>
-                    <TechLine>{experience.technologies.join(' · ')}</TechLine>
-                  </TimelineContent>
-                </ExperienceCard>
-              ))}
-            </Timeline>
-          </ExperienceSection>
-        </motion.div>
+          <Timeline>
+            {experiences.map((experience) => (
+              <ExperienceItem
+                key={`${experience.company}-${experience.period}`}
+                experience={experience}
+              />
+            ))}
+          </Timeline>
+        </ExperienceSection>
       </Container>
     </Section>
   );

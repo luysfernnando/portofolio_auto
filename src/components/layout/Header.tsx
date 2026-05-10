@@ -50,7 +50,7 @@ const Logo = styled(motion.button)`
   }
 
   span {
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => (theme.isDark ? '#60a5fa' : theme.colors.primary)};
     font-size: 0.65rem;
     font-weight: 800;
     letter-spacing: 0.14em;

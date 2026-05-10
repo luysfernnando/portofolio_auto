@@ -1,8 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
-import { Mail } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import React from 'react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
@@ -16,21 +15,25 @@ const Nav = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.9rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   max-width: 1180px;
   margin: 0 auto;
 
   @media (max-width: 520px) {
-    padding: 0.75rem 1.25rem;
+    padding: 1rem 1.25rem;
   }
+`;
+
+const DevDot = styled.span`
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const Logo = styled(motion.button)`
   color: ${({ theme }) => theme.colors.text};
   cursor: pointer;
-  display: grid;
-  gap: 0.1rem;
   text-align: left;
+  position: relative;
+  display: inline-block;
 
   strong {
     font-family: 'Newsreader', Georgia, serif;
@@ -39,56 +42,67 @@ const Logo = styled(motion.button)`
     line-height: 1;
   }
 
-  span {
-    color: ${({ theme }) => theme.colors.primary};
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -0.35rem;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: ${({ theme }) => theme.colors.accent};
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
   }
 
   @media (max-width: 520px) {
     strong { font-size: 1.12rem; }
-    span { font-size: 0.56rem; letter-spacing: 0.11em; }
   }
 `;
 
 const Copyright = styled.p`
   color: ${({ theme }) => theme.colors.textSecondary};
   font-size: 0.9rem;
+  margin: 0;
 
   @media (max-width: 760px) {
     display: none;
   }
 `;
 
-const SocialLinks = styled.div`
-  display: flex;
+const BackToTop = styled.button`
+  display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-`;
-
-const SocialLink = styled(motion.a)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 999px;
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.text};
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 650;
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.text};
+  background: transparent;
+  border: none;
+  position: relative;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
 
-  &:hover {
-    background: ${({ theme }) => theme.colors.text};
-    border-color: ${({ theme }) => theme.colors.text};
-    color: ${({ theme }) => theme.colors.inverse};
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -0.35rem;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: ${({ theme }) => theme.colors.accent};
+    transition: width 0.3s ease;
   }
 
-  @media (max-width: 520px) {
-    width: 2.25rem;
-    height: 2.25rem;
+  &:hover {
+    opacity: 1;
+  }
+
+  &:hover::after {
+    width: 100%;
   }
 `;
 
@@ -100,24 +114,16 @@ export const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <Nav>
-        <Logo onClick={scrollToTop} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }} aria-label="Voltar ao topo">
-          <strong>Luys Fernnando</strong>
-          <span>Full Stack</span>
+        <Logo onClick={scrollToTop} whileTap={{ scale: 0.98 }} aria-label="Voltar ao topo">
+          <strong>luysfernnando<DevDot>.dev</DevDot></strong>
         </Logo>
 
         <Copyright>© 2026 Luys Fernnando. Todos os direitos reservados.</Copyright>
 
-        <SocialLinks aria-label="Links sociais">
-          <SocialLink href="https://github.com/luysfernnando" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} aria-label="GitHub de Luys Fernnando">
-            <FaGithub size={18} />
-          </SocialLink>
-          <SocialLink href="https://linkedin.com/in/luysfernnando" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} aria-label="LinkedIn de Luys Fernnando">
-            <FaLinkedin size={18} />
-          </SocialLink>
-          <SocialLink href="mailto:contato@luysfernnando.dev" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} aria-label="Enviar email para Luys Fernnando">
-            <Mail size={18} />
-          </SocialLink>
-        </SocialLinks>
+        <BackToTop onClick={scrollToTop} aria-label="Voltar ao início">
+          Voltar ao Início
+          <ArrowUp size={15} />
+        </BackToTop>
       </Nav>
     </FooterContainer>
   );
