@@ -1,14 +1,13 @@
 import { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
 import '../app/globals.css';
-import { AppProviders } from '../components/infrastructure/AppProviders';
-import ClientGuard from '../components/infrastructure/ClientGuard';
-import { WebVitals } from '../components/infrastructure/WebVitals';
+import { AppProviders } from '../lib/AppProviders';
 import { Footer } from '../components/layout/Footer';
 import { Header } from '../components/layout/Header';
 import StyledComponentsRegistry from '../lib/styled-registry';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Luys Fernnando | Desenvolvedor Full Stack em Goiânia-GO',
   description: 'Portfolio de Luys Fernnando, Desenvolvedor Full Stack com 7+ anos em sistemas publicos criticos, TRE-GO, SEDS e Electios.',
   keywords: 'Luys Fernnando, Desenvolvedor Full Stack, Electios, TRE-GO, SEDS, Elixir, Phoenix, Goiânia',
@@ -17,18 +16,15 @@ export const metadata = {
     locale: 'pt_BR',
     title: 'Luys Fernnando | Electios e sistemas criticos',
     description: 'Portfolio profissional com foco no projeto Electios, experiencia em TRE-GO e SEDS, stack full stack e contato.',
-    siteName: 'Luys Fernnando'
-  }
-}
+    siteName: 'Luys Fernnando',
+  },
+};
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: '#000000',
 };
-
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -56,4 +52,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-

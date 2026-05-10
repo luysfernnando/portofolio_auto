@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Bell, Brain, Cloud, ExternalLink, Vote } from 'lucide-react';
-import { Container, Section, SectionTitle, Badge, Button } from '../../styles/GlobalStyle';
+import { Container, Section, SectionTitle, Badge, Button } from '../../styles/components';
 
 interface Capability {
   title: string;

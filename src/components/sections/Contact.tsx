@@ -5,7 +5,7 @@ import React from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
-import { Container, Section } from '../../styles/GlobalStyle';
+import { Container, Section } from '../../styles/components';
 
 const ContactGrid = styled.div`
   display: grid;

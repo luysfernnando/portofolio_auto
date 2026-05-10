@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
-import { Container, Section } from '../../styles/GlobalStyle';
+import { Container, Section } from '../../styles/components';
 
 interface ExperienceItemData {
   title: string;
@@ -17,14 +17,14 @@ interface ExperienceItemData {
 const stackGroups = [
   {
     title: 'Produto e frontend',
-    items: ['React', 'Next.js', 'LiveView', 'TypeScript', 'Styled Components', 'Acessibilidade'],
+    items: ['React', 'Next.js', 'LiveView/Phoenix', 'TypeScript', 'Acessibilidade'],
   },
   {
     title: 'Backend e dados',
-    items: ['Elixir', 'Phoenix', 'Ash', 'Node.js', 'PostgreSQL', 'APIs integradas'],
+    items: ['PHP', 'Elixir', 'Node.js', 'Golang', 'PostgreSQL', 'APIs Rest/GraphQL'],
   },
   {
-    title: 'Operacao e IA',
+    title: 'Operação e IA',
     items: ['Oracle Cloud', 'Cloudflare', 'Docker', 'RAG/LLM', 'Active Directory', 'SEI'],
   },
 ];
@@ -91,8 +91,37 @@ const experiences: ExperienceItemData[] = [
 /* Stack block */
 const StackBlock = styled(motion.div)`
   padding-bottom: 4rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   margin-bottom: 5rem;
+`;
+
+const StackLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 5rem;
+  align-items: start;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+`;
+
+const StackLeft = styled.div``;
+
+const StackTitle = styled(motion.h2)`
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  font-weight: 650;
+  line-height: 1.0;
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: 1.5rem;
+`;
+
+const StackTagline = styled(motion.p)`
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-width: 44ch;
 `;
 
 const StackTable = styled.div`
@@ -180,32 +209,11 @@ const TimelineStat = styled.div`
 `;
 
 const Timeline = styled.div`
-  position: relative;
   display: grid;
   gap: 1rem;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 1rem;
-    bottom: 1rem;
-    left: calc(10rem + 0.95rem);
-    width: 1px;
-    background: ${({ theme }) => theme.colors.border};
-  }
-
-  @media (max-width: 760px) {
-    &::before {
-      left: 1.1rem;
-    }
-  }
 `;
 
 const ExperienceCard = styled(motion.article)`
-  position: relative;
-  display: grid;
-  grid-template-columns: 10rem minmax(0, 1fr);
-  gap: 2rem;
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 1.5rem;
   background:
@@ -213,42 +221,6 @@ const ExperienceCard = styled(motion.article)`
     ${({ theme }) => theme.colors.surface};
   box-shadow: 0 1.25rem 2.5rem ${({ theme }) => theme.colors.shadow};
   overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 1.65rem;
-    left: calc(10rem + 0.62rem);
-    width: 0.7rem;
-    height: 0.7rem;
-    border-radius: 999px;
-    background: ${({ theme }) => theme.colors.accent};
-    border: 0.35rem solid ${({ theme }) => theme.colors.surface};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.border};
-    z-index: 2;
-  }
-
-  @media (max-width: 760px) {
-    grid-template-columns: 1fr;
-    gap: 0;
-
-    &::before {
-      top: 1.5rem;
-      left: 0.78rem;
-    }
-  }
-`;
-
-const DateRail = styled.div`
-  padding: 1.5rem 1.25rem;
-  border-right: 1px solid ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.background};
-
-  @media (max-width: 760px) {
-    padding: 1.25rem 1.25rem 0 3rem;
-    border-right: 0;
-    background: transparent;
-  }
 `;
 
 const Period = styled.div`
@@ -260,32 +232,25 @@ const Period = styled.div`
   text-transform: uppercase;
 `;
 
-const SeniorityMetrics = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 1rem;
-
-  span {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 999px;
-    border: 1px solid ${({ theme }) => theme.colors.border};
-    padding: 0.3rem 0.65rem;
-    color: ${({ theme }) => theme.colors.textSecondary};
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
+const TimelineContent = styled.div`
+  padding: 1.5rem;
 `;
 
-const TimelineContent = styled.div`
-  padding: 1.5rem 1.5rem 1.5rem 0;
+const CardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+`;
 
-  @media (max-width: 760px) {
-    padding: 0.75rem 1.25rem 1.35rem 3rem;
-  }
+const CardMeta = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  flex-shrink: 0;
 `;
 
 const RoleLabel = styled.div`
@@ -295,7 +260,6 @@ const RoleLabel = styled.div`
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.textSecondary};
-  margin-bottom: 0.4rem;
 `;
 
 const Company = styled.h3`
@@ -304,7 +268,7 @@ const Company = styled.h3`
   color: ${({ theme }) => theme.colors.primary};
   line-height: 1.1;
   letter-spacing: -0.01em;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 `;
 
 const DescriptionList = styled.ul`
@@ -368,14 +332,24 @@ export const About: React.FC = () => {
       <Container>
         <motion.div variants={containerVariants} initial={false} animate="visible">
           <StackBlock variants={itemVariants}>
-            <StackTable>
-              {stackGroups.map((group) => (
-                <StackRow key={group.title}>
-                  <StackCat>{group.title}</StackCat>
-                  <StackTechList>{group.items.join(' · ')}</StackTechList>
-                </StackRow>
-              ))}
-            </StackTable>
+            <StackLayout>
+              <StackLeft>
+                <StackTitle variants={itemVariants}>
+                  Tecnologias
+                </StackTitle>
+                <StackTagline variants={itemVariants}>
+                  Algumas das ferramentas e linguagens que mais utilizo nos sistemas críticos, produtos digitais e infraestrutura de onde atuo.
+                </StackTagline>
+              </StackLeft>
+              <StackTable>
+                {stackGroups.map((group) => (
+                  <StackRow key={group.title}>
+                    <StackCat>{group.title}</StackCat>
+                    <StackTechList>{group.items.join(' · ')}</StackTechList>
+                  </StackRow>
+                ))}
+              </StackTable>
+            </StackLayout>
           </StackBlock>
 
           <ExperienceSection id="experiencia" aria-labelledby="experiencia-title">
@@ -403,17 +377,14 @@ export const About: React.FC = () => {
             <Timeline>
               {experiences.map((experience) => (
                 <ExperienceCard key={`${experience.company}-${experience.period}`} variants={itemVariants}>
-                  <DateRail>
-                    <Period>{experience.period}</Period>
-                    <SeniorityMetrics>
-                      {experience.metrics.map((metric) => (
-                        <span key={metric}>{metric}</span>
-                      ))}
-                    </SeniorityMetrics>
-                  </DateRail>
                   <TimelineContent>
-                    <RoleLabel>{experience.title}</RoleLabel>
-                    <Company>{experience.company}</Company>
+                    <CardHeader>
+                      <Company>{experience.company}</Company>
+                      <CardMeta>
+                        <RoleLabel>{experience.title}</RoleLabel>
+                        <Period>{experience.period}</Period>
+                      </CardMeta>
+                    </CardHeader>
                     <DescriptionList>
                       {experience.description.map((item) => (
                         <li key={item}>{item}</li>

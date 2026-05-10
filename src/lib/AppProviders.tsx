@@ -1,9 +1,9 @@
 "use client";
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { ThemeStateProvider, useThemeContext } from '../../context/ThemeContext';
-import { GlobalStyle } from '../../styles/GlobalStyle';
-import { getTheme } from '../../styles/theme';
+import { ThemeStateProvider, useThemeContext } from '../context/ThemeContext';
+import { GlobalStyle } from '../styles/GlobalStyle';
+import { getTheme } from '../styles/theme';
 
 const AppProvidersContent = ({ children }: { children: React.ReactNode }) => {
   const { isDark } = useThemeContext();

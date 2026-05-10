@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Container } from '../../styles/GlobalStyle';
+import { Button, Container } from '../../styles/components';
 
 const HeroSection = styled.section`
   width: 100%;
@@ -164,7 +164,7 @@ export const Hero: React.FC = () => {
       <HeroContent>
         <motion.div variants={containerVariants} initial={false} animate="visible">
           <RoleLabel variants={itemVariants}>
-            Desenvolvedor Full Stack · Goiânia-GO
+            Dev Senior · Goiânia-GO
           </RoleLabel>
 
           <Name variants={itemVariants}>Luys Fernnando</Name>
@@ -211,7 +211,7 @@ export const Hero: React.FC = () => {
         transition={{ delay: 1.1 }}
         aria-label="Rolar para experiência"
       >
-        Role
+        Desça para conhecer
         <motion.span animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
           <ChevronDown size={18} />
         </motion.span>
