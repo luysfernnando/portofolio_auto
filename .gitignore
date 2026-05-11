@@ -4,7 +4,7 @@
 .pnp.js
 .github
 .planning
-.sisyphus
+sisyphus.
 .playwright-mcp
 
 # Testing
@@ -20,6 +20,7 @@
 # Misc
 .DS_Store
 *.pem
+.vscode
 
 # Debug
 npm-debug.log*

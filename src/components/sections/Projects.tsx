@@ -14,23 +14,23 @@ interface Capability {
 
 const capabilities: Capability[] = [
   {
-    title: 'Votacao em tempo real',
+    title: 'Votação em tempo real',
     description: 'Acompanhamento de votos, filas e eventos de pleito com foco em confiabilidade operacional.',
     icon: <Vote size={22} />,
   },
   {
-    title: 'Comunicacao multicanal',
-    description: 'Notificacoes por email, SMS e WhatsApp para orientar eleitores e equipes durante a jornada.',
+    title: 'Comunicação multicanal',
+    description: 'Notificações por email, SMS e WhatsApp para orientar eleitores e equipes durante a jornada.',
     icon: <Bell size={22} />,
   },
   {
-    title: 'Operacoes com IA',
-    description: 'Comandos em linguagem natural para apoiar rotinas administrativas e reduzir friccao operacional.',
+    title: 'Operações com IA',
+    description: 'Comandos em linguagem natural para apoiar rotinas administrativas e reduzir fricção operacional.',
     icon: <Brain size={22} />,
   },
   {
     title: 'Infraestrutura resiliente',
-    description: 'Oracle Cloud, PostgreSQL e Cloudflare compondo uma base segura para eventos sensiveis.',
+    description: 'Oracle Cloud, PostgreSQL e Cloudflare compondo uma base segura para eventos sensíveis.',
     icon: <Cloud size={22} />,
   },
 ];
@@ -202,7 +202,7 @@ export const Projects: React.FC = () => {
                 <Label>Case study · cofundador e desenvolvedor</Label>
                 <ProjectTitle>Electios</ProjectTitle>
                 <ProjectLead>
-                  Plataforma de eleicoes online utilizada por OAB GO, OAB MT, OAB RJ e outras instituicoes. O produto combina experiencia eleitoral, auditoria operacional, comunicacao em massa e automacoes inteligentes para pleitos com mais de 50 mil eleitores.
+                  Plataforma de eleições online utilizada por OAB GO, OAB MT, OAB RJ e outras instituições. O produto combina experiencia eleitoral, auditoria operacional, comunicação em massa e automações inteligentes para pleitos com mais de 50 mil eleitores.
                 </ProjectLead>
                 <CaseActions>
                   <Button as="a" href="https://electios.com.br" target="_blank" rel="noopener noreferrer" $variant="primary" $size="sm" aria-label="Abrir site do Electios">
@@ -225,7 +225,7 @@ export const Projects: React.FC = () => {
                 </Metric>
                 <Metric>
                   <strong>IA</strong>
-                  <span>operacoes em linguagem natural</span>
+                  <span>operações em linguagem natural</span>
                 </Metric>
                 <Metric>
                   <strong>24/7</strong>
@@ -244,7 +244,7 @@ export const Projects: React.FC = () => {
               ))}
             </CapabilityGrid>
 
-            <StackBand aria-label="Stack tecnico do Electios">
+            <StackBand aria-label="Stack técnico do Electios">
               {['Elixir', 'Phoenix', 'LiveView', 'Ash', 'PostgreSQL', 'Oracle Cloud', 'Cloudflare', 'Email', 'SMS', 'WhatsApp'].map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
               ))}

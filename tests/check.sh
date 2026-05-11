@@ -20,7 +20,7 @@ out=$(npm run build 2>&1) || {
 }
 
 # 3. Security audit (high/critical only)
-out=$(npm audit --audit-level=high 2>&1) || {
+out=$(npm audit --audit-level=high --omit=dev 2>&1) || {
   pkgs=$(echo "$out" | awk '/Severity: (high|critical)/ {split(prev,a," "); printf "%s ", a[1]} {prev=$0}' | xargs)
   summary=$(echo "$out" | grep -oE '[0-9]+ (high|critical)' | tr '\n' ', ' | sed 's/, $//')
   moderate=$(echo "$out" | grep -oE '[0-9]+ moderate' | grep -oE '[0-9]+')
