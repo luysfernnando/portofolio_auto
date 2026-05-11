@@ -1,10 +1,10 @@
 "use client";
-import React from 'react';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { Bell, Brain, Cloud, ExternalLink, Vote } from 'lucide-react';
-import { Container, Section, SectionTitle, Badge, Button } from '../../styles/components';
+import React from 'react';
+import { useInView } from 'react-intersection-observer';
+import styled from 'styled-components';
+import { Badge, Button, Container, Section, SectionTitle } from '../../styles/components';
 
 interface Capability {
   title: string;
@@ -206,11 +206,11 @@ export const Projects: React.FC = () => {
                 </ProjectLead>
                 <CaseActions>
                   <Button as="a" href="https://electios.com.br" target="_blank" rel="noopener noreferrer" $variant="primary" $size="sm" aria-label="Abrir site do Electios">
-                    Conhecer Electios
+                    Conheça o Electios
                     <ExternalLink size={16} />
                   </Button>
                   <Button as="a" href="#contact" $variant="outline" $size="sm">
-                    Conversar sobre projetos criticos
+                    Conversar sobre outros projetos
                   </Button>
                 </CaseActions>
               </div>

@@ -27,15 +27,6 @@ export const SectionTitle = styled(motion.h2)`
   color: ${({ theme }) => theme.colors.text};
   max-width: 12ch;
 
-  &::after {
-    content: '';
-    display: block;
-    width: 4rem;
-    height: 1px;
-    margin-top: 1rem;
-    background: ${({ theme }) => theme.colors.accent};
-  }
-
   @media (max-width: 768px) {
     margin-bottom: 1.5rem;
   }
