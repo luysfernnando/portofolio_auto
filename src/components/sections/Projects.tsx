@@ -199,7 +199,7 @@ export const Projects: React.FC = () => {
           <CaseStudy variants={itemVariants}>
             <CaseHeader>
               <div>
-                <Label>Case study · cofundador e desenvolvedor</Label>
+                <Label>Plataforma em escala nacional</Label>
                 <ProjectTitle>Electios</ProjectTitle>
                 <ProjectLead>
                   Plataforma de eleições online utilizada por OAB GO, OAB MT, OAB RJ e outras instituições. O produto combina experiencia eleitoral, auditoria operacional, comunicação em massa e automações inteligentes para pleitos com mais de 50 mil eleitores.
@@ -245,7 +245,7 @@ export const Projects: React.FC = () => {
             </CapabilityGrid>
 
             <StackBand aria-label="Stack técnico do Electios">
-              {['Elixir', 'Phoenix', 'LiveView', 'Ash', 'PostgreSQL', 'Oracle Cloud', 'Cloudflare', 'Email', 'SMS', 'WhatsApp'].map((tech) => (
+              {['Elixir', 'Phoenix', 'LiveView', 'Ash-Framework', 'PostgreSQL', 'Oracle Cloud', 'IA'].map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
               ))}
             </StackBand>

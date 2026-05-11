@@ -4,7 +4,7 @@
 ```bash
 npm run dev
 npm run build
-./tests/check.sh
+npm run check
 ```
 
 ## Stack
