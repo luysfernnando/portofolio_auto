@@ -8,13 +8,13 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
-  title: 'Luys Fernnando | Desenvolvedor Full Stack em Goiânia-GO',
-  description: 'Portfolio de Luys Fernnando, Desenvolvedor Full Stack com 7+ anos em sistemas publicos criticos, TRE-GO, SEDS e Electios.',
-  keywords: 'Luys Fernnando, Desenvolvedor Full Stack, Electios, TRE-GO, SEDS, Elixir, Phoenix, Goiânia',
+  title: 'Luys Fernnando | Dev Senior Full Stack em Goiânia-GO',
+  description: 'Portfolio de Luys Fernnando, Dev Senior Full Stack com 7+ anos em sistemas públicos criticos, TRE-GO, SEDS e Electios.',
+  keywords: 'Luys Fernnando, Dev Senior Full Stack, Electios, TRE-GO, SEDS, Elixir, Phoenix, Goiânia',
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    title: 'Luys Fernnando | Electios e sistemas criticos',
+    title: 'Luys Fernnando | Dev Senior Full Stack em Goiânia-GO',
     description: 'Portfolio profissional com foco no projeto Electios, experiencia em TRE-GO e SEDS, stack full stack e contato.',
     siteName: 'Luys Fernnando',
   },
