@@ -29,7 +29,7 @@ const experiences: ExperienceItemData[] = [
       'Apoia rotinas com RAG/LLM, suporte tecnico e automacao documental para reduzir tempo de atendimento e aumentar produtividade.',
       'Toma decisoes tecnicas autonomas considerando escala, seguranca e impacto institucional.',
     ],
-    technologies: ['Java', 'PostgreSQL', 'Active Directory', 'WordPress', 'SEI', 'RAG/LLM', 'GLPI'],
+    technologies: ['PHP', 'PostgreSQL', 'Active Directory', 'WordPress', 'SEI', 'RAG/LLM', 'GLPI'],
   },
   {
     title: 'Desenvolvedor Full Stack',
@@ -249,7 +249,7 @@ const ExperienceItem: React.FC<{ experience: ExperienceItemData }> = ({ experien
   );
 };
 
-export const About: React.FC = () => {
+export const Experiences: React.FC = () => {
   const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.15 });
 
   return (
