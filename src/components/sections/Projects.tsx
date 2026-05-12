@@ -5,34 +5,13 @@ import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
 import { Badge, Button, Container, Section, SectionTitle } from '../../styles/components';
+import { useLanguage } from '../../context/LanguageContext';
 
-interface Capability {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-}
-
-const capabilities: Capability[] = [
-  {
-    title: 'Votação em tempo real',
-    description: 'Acompanhamento de votos, filas e eventos de pleito com foco em confiabilidade operacional.',
-    icon: <Vote size={22} />,
-  },
-  {
-    title: 'Comunicação multicanal',
-    description: 'Notificações por email, SMS e WhatsApp para orientar eleitores e equipes durante a jornada.',
-    icon: <Bell size={22} />,
-  },
-  {
-    title: 'Operações com IA',
-    description: 'Comandos em linguagem natural para apoiar rotinas administrativas e reduzir fricção operacional.',
-    icon: <Brain size={22} />,
-  },
-  {
-    title: 'Infraestrutura resiliente',
-    description: 'Oracle Cloud, PostgreSQL e Cloudflare compondo uma base segura para eventos sensíveis.',
-    icon: <Cloud size={22} />,
-  },
+const capabilityIcons = [
+  <Vote size={22} key="vote" />,
+  <Bell size={22} key="bell" />,
+  <Brain size={22} key="brain" />,
+  <Cloud size={22} key="cloud" />,
 ];
 
 const ProjectsIntro = styled.div`
@@ -163,17 +142,19 @@ const CaseActions = styled.div`
   margin-top: 1.5rem;
 `;
 
+const stack = ['Elixir', 'Phoenix', 'LiveView', 'Ash-Framework', 'PostgreSQL', 'Oracle Cloud', 'IA'];
+
 export const Projects: React.FC = () => {
+  const { t, messages } = useLanguage();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.12 });
+
+  const e = messages.projects.electios;
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.15,
-      },
+      transition: { staggerChildren: 0.12, delayChildren: 0.15 },
     },
   };
 
@@ -192,60 +173,58 @@ export const Projects: React.FC = () => {
         <motion.div variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
           <ProjectsIntro>
             <SectionTitle id="electios-title" variants={itemVariants}>
-              Projeto principal
+              {t('projects.section_title')}
             </SectionTitle>
           </ProjectsIntro>
 
           <CaseStudy variants={itemVariants}>
             <CaseHeader>
               <div>
-                <Label>Plataforma em escala nacional</Label>
+                <Label>{e.label}</Label>
                 <ProjectTitle>Electios</ProjectTitle>
-                <ProjectLead>
-                  Plataforma de eleições online utilizada por OAB GO, OAB MT, OAB RJ e outras instituições. O produto combina experiencia eleitoral, auditoria operacional, comunicação em massa e automações inteligentes para pleitos com mais de 50 mil eleitores.
-                </ProjectLead>
+                <ProjectLead>{e.lead}</ProjectLead>
                 <CaseActions>
-                  <Button as="a" href="https://electios.com.br" target="_blank" rel="noopener noreferrer" $variant="primary" $size="sm" aria-label="Abrir site do Electios">
-                    Conheça o Electios
+                  <Button as="a" href="https://electios.com.br" target="_blank" rel="noopener noreferrer" $variant="primary" $size="sm" aria-label="Electios">
+                    {e.cta_primary}
                     <ExternalLink size={16} />
                   </Button>
                   <Button as="a" href="#contact" $variant="outline" $size="sm">
-                    Conversar sobre outros projetos
+                    {e.cta_secondary}
                   </Button>
                 </CaseActions>
               </div>
-              <MetricPanel aria-label="Indicadores do Electios">
+              <MetricPanel aria-label="Electios metrics">
                 <Metric>
                   <strong>50k+</strong>
-                  <span>eleitores em pleitos operados</span>
+                  <span>{e.metrics.voters}</span>
                 </Metric>
                 <Metric>
                   <strong>OAB</strong>
-                  <span>GO, MT, RJ e outras seccionais</span>
+                  <span>{e.metrics.oab}</span>
                 </Metric>
                 <Metric>
                   <strong>IA</strong>
-                  <span>operações em linguagem natural</span>
+                  <span>{e.metrics.ai}</span>
                 </Metric>
                 <Metric>
                   <strong>24/7</strong>
-                  <span>foco em disponibilidade e resposta</span>
+                  <span>{e.metrics.uptime}</span>
                 </Metric>
               </MetricPanel>
             </CaseHeader>
 
             <CapabilityGrid>
-              {capabilities.map((capability) => (
-                <CapabilityCard key={capability.title} variants={itemVariants}>
-                  {capability.icon}
-                  <h4>{capability.title}</h4>
-                  <p>{capability.description}</p>
+              {e.capabilities.map((cap, i) => (
+                <CapabilityCard key={cap.title} variants={itemVariants}>
+                  {capabilityIcons[i]}
+                  <h4>{cap.title}</h4>
+                  <p>{cap.description}</p>
                 </CapabilityCard>
               ))}
             </CapabilityGrid>
 
-            <StackBand aria-label="Stack técnico do Electios">
-              {['Elixir', 'Phoenix', 'LiveView', 'Ash-Framework', 'PostgreSQL', 'Oracle Cloud', 'IA'].map((tech) => (
+            <StackBand aria-label="Electios tech stack">
+              {stack.map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
               ))}
             </StackBand>

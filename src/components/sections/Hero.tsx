@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown } from 'lucide-react';
 import React from 'react';
 import styled from 'styled-components';
 import { Button, Container } from '../../styles/components';
+import { useLanguage } from '../../context/LanguageContext';
 
 const HeroSection = styled.section`
   width: 100%;
@@ -138,6 +139,8 @@ const ScrollIndicator = styled(motion.button)`
 `;
 
 export const Hero: React.FC = () => {
+  const { t } = useLanguage();
+
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -160,45 +163,45 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <HeroSection id="home" aria-label="Apresentação de Luys Fernnando">
+    <HeroSection id="home" aria-label="Luys Fernnando">
       <HeroContent>
         <motion.div variants={containerVariants} initial={false} animate="visible">
           <RoleLabel variants={itemVariants}>
-            Dev Senior · Goiânia-GO
+            {t('hero.role')}
           </RoleLabel>
 
           <Name variants={itemVariants}>Luys Fernnando</Name>
 
           <Description variants={itemVariants}>
-            Luys Fernnando Ribeiro Caetano Brasil atua há mais de 7 anos em sistemas críticos do setor público e em produtos digitais de alta responsabilidade, com foco em arquitetura, performance e operações em tempo real.
+            {t('hero.description')}
           </Description>
 
           <ActionButtons variants={itemVariants}>
             <Button $variant="primary" $size="lg" onClick={() => scrollToSection('experiencia')}>
-              Ver experiência
+              {t('hero.cta_primary')}
               <ArrowRight size={18} />
             </Button>
             <Button $variant="outline" $size="lg" onClick={() => scrollToSection('contact')}>
-              Contato
+              {t('hero.cta_secondary')}
             </Button>
           </ActionButtons>
 
-          <Stats variants={itemVariants} aria-label="Resumo de carreira">
+          <Stats variants={itemVariants} aria-label="Career summary">
             <StatItem>
               <StatNumber>7+</StatNumber>
-              <StatLabel>anos em sistemas críticos do setor público</StatLabel>
+              <StatLabel>{t('hero.stats.years_label')}</StatLabel>
             </StatItem>
             <StatItem>
               <StatNumber>100+</StatNumber>
-              <StatLabel>sistemas sustentados e evoluídos no TRE-GO</StatLabel>
+              <StatLabel>{t('hero.stats.systems_label')}</StatLabel>
             </StatItem>
             <StatItem>
               <StatNumber>10+</StatNumber>
-              <StatLabel>portais públicos automatizados na SEDS</StatLabel>
+              <StatLabel>{t('hero.stats.portals_label')}</StatLabel>
             </StatItem>
             <StatItem>
               <StatNumber>4</StatNumber>
-              <StatLabel>setores atendidos: público, fintech, social e digital</StatLabel>
+              <StatLabel>{t('hero.stats.sectors_label')}</StatLabel>
             </StatItem>
           </Stats>
         </motion.div>
@@ -209,9 +212,9 @@ export const Hero: React.FC = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.1 }}
-        aria-label="Rolar para experiência"
+        aria-label={t('hero.scroll')}
       >
-        Desça para conhecer
+        {t('hero.scroll')}
         <motion.span animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
           <ChevronDown size={18} />
         </motion.span>

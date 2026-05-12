@@ -4,6 +4,7 @@ import { ExternalLink, Mail } from 'lucide-react';
 import React from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { useInView } from 'react-intersection-observer';
+import { useLanguage } from '../../context/LanguageContext';
 import styled from 'styled-components';
 import { Container, Section } from '../../styles/components';
 
@@ -97,6 +98,7 @@ const ContactRow = styled(motion.a)`
 `;
 
 export const Contact: React.FC = () => {
+  const { t } = useLanguage();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const containerVariants = {
@@ -124,10 +126,10 @@ export const Contact: React.FC = () => {
           <ContactGrid>
             <ContactLeft>
               <ContactTitle id="contact-title" variants={rowVariants}>
-                Contato
+                {t('contact.title')}
               </ContactTitle>
               <Tagline variants={rowVariants}>
-                Aberto a conversas sobre sistemas criticos, produtos de alta responsabilidade e oportunidades que demandam senioridade tecnica real.
+                {t('contact.tagline')}
               </Tagline>
             </ContactLeft>
 

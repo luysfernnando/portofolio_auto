@@ -3,21 +3,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
-
-const stackGroups = [
-  {
-    title: 'Produto e frontend',
-    items: ['React', 'Next.js', 'LiveView/Phoenix', 'TypeScript', 'Acessibilidade'],
-  },
-  {
-    title: 'Backend e dados',
-    items: ['PHP', 'Elixir', 'Node.js', 'Golang', 'PostgreSQL', 'APIs Rest/GraphQL'],
-  },
-  {
-    title: 'Operação e IA',
-    items: ['Oracle Cloud', 'Cloudflare', 'Docker', 'RAG/LLM', 'Active Directory', 'SEI'],
-  },
-];
+import { useLanguage } from '../../context/LanguageContext';
 
 const StackBlock = styled(motion.div)`
   padding-bottom: 4rem;
@@ -98,6 +84,7 @@ const fadeUp = {
 };
 
 export const Technologies: React.FC = () => {
+  const { t, messages } = useLanguage();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 });
 
   return (
@@ -109,13 +96,11 @@ export const Technologies: React.FC = () => {
     >
       <StackLayout>
         <StackLeft>
-          <StackTitle>Tecnologias</StackTitle>
-          <StackTagline>
-            Algumas das ferramentas e linguagens que mais utilizo nos sistemas críticos, produtos digitais e infraestrutura de onde atuo.
-          </StackTagline>
+          <StackTitle>{t('technologies.title')}</StackTitle>
+          <StackTagline>{t('technologies.tagline')}</StackTagline>
         </StackLeft>
         <StackTable>
-          {stackGroups.map((group) => (
+          {messages.technologies.groups.map((group) => (
             <StackRow key={group.title}>
               <StackCat>{group.title}</StackCat>
               <StackTechList>{group.items.join(' · ')}</StackTechList>

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 import React from 'react';
 import styled from 'styled-components';
+import { useLanguage } from '../../context/LanguageContext';
 
 const FooterContainer = styled.footer`
   backdrop-filter: blur(14px);
@@ -107,6 +108,8 @@ const BackToTop = styled.button`
 `;
 
 export const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -114,14 +117,14 @@ export const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <Nav>
-        <Logo onClick={scrollToTop} whileTap={{ scale: 0.98 }} aria-label="Voltar ao topo">
+        <Logo onClick={scrollToTop} whileTap={{ scale: 0.98 }} aria-label={t('footer.back_to_top')}>
           <strong>luysfernnando<DevDot>.dev</DevDot></strong>
         </Logo>
 
-        <Copyright>© 2026 Luys Fernnando. Todos os direitos reservados.</Copyright>
+        <Copyright>{t('footer.copyright')}</Copyright>
 
-        <BackToTop onClick={scrollToTop} aria-label="Voltar ao início">
-          Voltar ao Início
+        <BackToTop onClick={scrollToTop} aria-label={t('footer.back_to_top')}>
+          {t('footer.back_to_top')}
           <ArrowUp size={15} />
         </BackToTop>
       </Nav>

@@ -4,75 +4,8 @@ import React from 'react';
 import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
 import { Container, Section } from '../../styles/components';
+import { useLanguage, type Messages } from '../../context/LanguageContext';
 import { Technologies } from './Technologies';
-
-interface ExperienceItemData {
-  title: string;
-  company: string;
-  period: string;
-  metrics: string[];
-  description: string[];
-  technologies: string[];
-}
-
-const experiences: ExperienceItemData[] = [
-  {
-    title: 'Desenvolvedor Full Stack',
-    company: 'ILHA SERVICE - TRE-GO',
-    period: 'Mai 2025 - Atual',
-    metrics: ['100+ sistemas', 'escala institucional', 'incidentes criticos'],
-    description: [
-      'Sustenta e evolui mais de 100 sistemas para cartorios, magistrados e servidores, protegendo continuidade operacional em ambiente publico critico.',
-      'Realiza tuning de queries, correcao de N+1, estrategias de cache e ajustes de infraestrutura para melhorar performance de sistemas legados e atuais.',
-      'Integra fluxos com Active Directory, WordPress e SEI, conectando autenticacao, conteudo institucional e processos administrativos.',
-      'Diagnostica incidentes criticos no GLPI com leitura de logs, queries, deadlocks e comportamento de aplicacoes em producao.',
-      'Apoia rotinas com RAG/LLM, suporte tecnico e automacao documental para reduzir tempo de atendimento e aumentar produtividade.',
-      'Toma decisoes tecnicas autonomas considerando escala, seguranca e impacto institucional.',
-    ],
-    technologies: ['PHP', 'PostgreSQL', 'Active Directory', 'WordPress', 'SEI', 'RAG/LLM', 'GLPI'],
-  },
-  {
-    title: 'Desenvolvedor Full Stack',
-    company: 'Kernel Lab Solucoes Digitais',
-    period: 'Fev 2024 - Jan 2025',
-    metrics: ['full stack', 'testes automatizados', 'code review'],
-    description: [
-      'Construiu modulos em Laravel, React e Vue para produtos digitais com foco em manutencao, legibilidade e entrega continua.',
-      'Otimizou queries e pontos de performance para reduzir gargalos em telas, APIs e rotinas de dados.',
-      'Implementou testes automatizados com PHPUnit e Jest, elevando confianca de entrega e regressao.',
-      'Manteve ambientes Docker consistentes para desenvolvimento, homologacao e apoio a novos integrantes.',
-      'Contribuiu com code review, suporte tecnico ao time e padronizacao de decisoes de implementacao.',
-    ],
-    technologies: ['Laravel', 'React', 'Vue', 'PHPUnit', 'Jest', 'Docker'],
-  },
-  {
-    title: 'Desenvolvedor Full Stack',
-    company: 'Tradio Bank',
-    period: 'Fev 2023 - Fev 2024',
-    metrics: ['banking', 'integracoes fiscais', 'AWS ECS'],
-    description: [
-      'Entregou funcionalidades bancarias criticas em Laravel e React, equilibrando produto, confiabilidade e requisitos operacionais.',
-      'Implementou fluxos de autenticacao e integracoes com SEFAZ para operacoes sensiveis e dependentes de conformidade.',
-      'Aplicou lazy loading e melhorias de carregamento para reduzir custo de renderizacao em interfaces de alta responsabilidade.',
-      'Participou de deploys em AWS ECS, aproximando desenvolvimento, infraestrutura e observabilidade de producao.',
-    ],
-    technologies: ['Laravel', 'React', 'SEFAZ', 'Lazy loading', 'AWS ECS'],
-  },
-  {
-    title: 'Desenvolvedor Full Stack',
-    company: 'SEDS - Governo de Goias',
-    period: 'Mar 2019 - Fev 2023',
-    metrics: ['milhares de usuarios', '10+ portais', 'junior a pleno'],
-    description: [
-      'Desenvolveu o Passaporte do Idoso para milhares de usuarios, ampliando acesso a servicos publicos digitais.',
-      'Automatizou rotinas e manutencao em mais de 10 portais institucionais do Governo de Goias.',
-      'Criou APIs REST para conectar servicos, paineis administrativos e fluxos de informacao publica.',
-      'Entregou interfaces responsivas para alto volume de acessos e diferentes perfis de usuarios.',
-      'Evoluiu de junior para pleno ao assumir maior autonomia tecnica, leitura de negocio e responsabilidade por entregas.',
-    ],
-    technologies: ['APIs REST', 'Portais institucionais', 'Interfaces responsivas', 'Servicos publicos'],
-  },
-];
 
 const ExperienceSection = styled.div``;
 
@@ -220,9 +153,10 @@ const fadeUp = {
   visible: { y: 0, opacity: 1, transition: { duration: 0.58, ease: 'easeOut' as const } },
 };
 
-const ExperienceItem: React.FC<{ experience: ExperienceItemData }> = ({ experience }) => {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 });
+type ExpItem = Messages['experiences']['items'][number];
 
+const ExperienceItem: React.FC<{ exp: ExpItem }> = ({ exp }) => {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 });
   return (
     <ExperienceCard
       ref={ref}
@@ -232,24 +166,25 @@ const ExperienceItem: React.FC<{ experience: ExperienceItemData }> = ({ experien
     >
       <TimelineContent>
         <CardHeader>
-          <Company>{experience.company}</Company>
+          <Company>{exp.company}</Company>
           <CardMeta>
-            <RoleLabel>{experience.title}</RoleLabel>
-            <Period>{experience.period}</Period>
+            <RoleLabel>{exp.title}</RoleLabel>
+            <Period>{exp.period}</Period>
           </CardMeta>
         </CardHeader>
         <DescriptionList>
-          {experience.description.map((item) => (
+          {exp.description.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </DescriptionList>
-        <TechLine>{experience.technologies.join(' · ')}</TechLine>
+        <TechLine>{exp.technologies.join(' · ')}</TechLine>
       </TimelineContent>
     </ExperienceCard>
   );
 };
 
 export const Experiences: React.FC = () => {
+  const { t, messages } = useLanguage();
   const [headerRef, headerInView] = useInView({ triggerOnce: true, threshold: 0.15 });
 
   return (
@@ -265,7 +200,7 @@ export const Experiences: React.FC = () => {
             animate={headerInView ? 'visible' : 'hidden'}
           >
             <ExperienceTitle id="experiencia-title">
-              Linha do tempo profissional
+              {t('experiences.title')}
             </ExperienceTitle>
           </ExperienceHeader>
 
@@ -274,28 +209,25 @@ export const Experiences: React.FC = () => {
             initial="hidden"
             animate={headerInView ? 'visible' : 'hidden'}
             transition={{ delay: 0.1 }}
-            aria-label="Resumo de senioridade"
+            aria-label="Seniority summary"
           >
             <TimelineStat>
               <strong>7+</strong>
-              <span>anos em software full stack</span>
+              <span>{t('experiences.stats.years')}</span>
             </TimelineStat>
             <TimelineStat>
               <strong>100+</strong>
-              <span>sistemas sustentados no TRE-GO</span>
+              <span>{t('experiences.stats.systems')}</span>
             </TimelineStat>
             <TimelineStat>
               <strong>10+</strong>
-              <span>portais publicos automatizados</span>
+              <span>{t('experiences.stats.portals')}</span>
             </TimelineStat>
           </TimelineStats>
 
           <Timeline>
-            {experiences.map((experience) => (
-              <ExperienceItem
-                key={`${experience.company}-${experience.period}`}
-                experience={experience}
-              />
+            {messages.experiences.items.map((exp) => (
+              <ExperienceItem key={`${exp.company}-${exp.period}`} exp={exp} />
             ))}
           </Timeline>
         </ExperienceSection>

@@ -1,0 +1,137 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "experience": "Experiencia",
+    "projects": "Projetos",
+    "contact": "Contato"
+  },
+  "hero": {
+    "role": "Dev Senior · Goiânia-GO",
+    "description": "Luys Fernnando Ribeiro Caetano Brasil atua há mais de 7 anos em sistemas críticos do setor público e em produtos digitais de alta responsabilidade, com foco em arquitetura, performance e operações em tempo real.",
+    "cta_primary": "Ver experiência",
+    "cta_secondary": "Contato",
+    "stats": {
+      "years_label": "anos em sistemas críticos do setor público",
+      "systems_label": "sistemas sustentados e evoluídos no TRE-GO",
+      "portals_label": "portais públicos automatizados na SEDS",
+      "sectors_label": "setores atendidos: público, fintech, social e digital"
+    },
+    "scroll": "Desça para conhecer"
+  },
+  "technologies": {
+    "title": "Tecnologias",
+    "tagline": "Algumas das ferramentas e linguagens que mais utilizo nos sistemas críticos, produtos digitais e infraestrutura de onde atuo.",
+    "groups": [
+      { "title": "Produto e frontend", "items": ["React", "Next.js", "LiveView/Phoenix", "TypeScript", "Acessibilidade"] },
+      { "title": "Backend e dados", "items": ["PHP", "Elixir", "Node.js", "Golang", "PostgreSQL", "APIs Rest/GraphQL"] },
+      { "title": "Operação e IA", "items": ["Oracle Cloud", "Cloudflare", "Docker", "RAG/LLM", "Active Directory", "SEI"] }
+    ]
+  },
+  "experiences": {
+    "title": "Linha do tempo profissional",
+    "stats": {
+      "years": "anos em software full stack",
+      "systems": "sistemas sustentados no TRE-GO",
+      "portals": "portais publicos automatizados"
+    },
+    "items": [
+      {
+        "title": "Desenvolvedor Full Stack",
+        "company": "ILHA SERVICE - TRE-GO",
+        "period": "Mai 2025 - Atual",
+        "metrics": ["100+ sistemas", "escala institucional", "incidentes criticos"],
+        "description": [
+          "Sustenta e evolui mais de 100 sistemas para cartorios, magistrados e servidores, protegendo continuidade operacional em ambiente publico critico.",
+          "Realiza tuning de queries, correcao de N+1, estrategias de cache e ajustes de infraestrutura para melhorar performance de sistemas legados e atuais.",
+          "Integra fluxos com Active Directory, WordPress e SEI, conectando autenticacao, conteudo institucional e processos administrativos.",
+          "Diagnostica incidentes criticos no GLPI com leitura de logs, queries, deadlocks e comportamento de aplicacoes em producao.",
+          "Apoia rotinas com RAG/LLM, suporte tecnico e automacao documental para reduzir tempo de atendimento e aumentar produtividade.",
+          "Toma decisoes tecnicas autonomas considerando escala, seguranca e impacto institucional."
+        ],
+        "technologies": ["PHP", "PostgreSQL", "Active Directory", "WordPress", "SEI", "RAG/LLM", "GLPI"]
+      },
+      {
+        "title": "Desenvolvedor Full Stack",
+        "company": "Kernel Lab Solucoes Digitais",
+        "period": "Fev 2024 - Jan 2025",
+        "metrics": ["full stack", "testes automatizados", "code review"],
+        "description": [
+          "Construiu modulos em Laravel, React e Vue para produtos digitais com foco em manutencao, legibilidade e entrega continua.",
+          "Otimizou queries e pontos de performance para reduzir gargalos em telas, APIs e rotinas de dados.",
+          "Implementou testes automatizados com PHPUnit e Jest, elevando confianca de entrega e regressao.",
+          "Manteve ambientes Docker consistentes para desenvolvimento, homologacao e apoio a novos integrantes.",
+          "Contribuiu com code review, suporte tecnico ao time e padronizacao de decisoes de implementacao."
+        ],
+        "technologies": ["Laravel", "React", "Vue", "PHPUnit", "Jest", "Docker"]
+      },
+      {
+        "title": "Desenvolvedor Full Stack",
+        "company": "Tradio Bank",
+        "period": "Fev 2023 - Fev 2024",
+        "metrics": ["banking", "integracoes fiscais", "AWS ECS"],
+        "description": [
+          "Entregou funcionalidades bancarias criticas em Laravel e React, equilibrando produto, confiabilidade e requisitos operacionais.",
+          "Implementou fluxos de autenticacao e integracoes com SEFAZ para operacoes sensiveis e dependentes de conformidade.",
+          "Aplicou lazy loading e melhorias de carregamento para reduzir custo de renderizacao em interfaces de alta responsabilidade.",
+          "Participou de deploys em AWS ECS, aproximando desenvolvimento, infraestrutura e observabilidade de producao."
+        ],
+        "technologies": ["Laravel", "React", "SEFAZ", "Lazy loading", "AWS ECS"]
+      },
+      {
+        "title": "Desenvolvedor Full Stack",
+        "company": "SEDS - Governo de Goias",
+        "period": "Mar 2019 - Fev 2023",
+        "metrics": ["milhares de usuarios", "10+ portais", "junior a pleno"],
+        "description": [
+          "Desenvolveu o Passaporte do Idoso para milhares de usuarios, ampliando acesso a servicos publicos digitais.",
+          "Automatizou rotinas e manutencao em mais de 10 portais institucionais do Governo de Goias.",
+          "Criou APIs REST para conectar servicos, paineis administrativos e fluxos de informacao publica.",
+          "Entregou interfaces responsivas para alto volume de acessos e diferentes perfis de usuarios.",
+          "Evoluiu de junior para pleno ao assumir maior autonomia tecnica, leitura de negocio e responsabilidade por entregas."
+        ],
+        "technologies": ["APIs REST", "Portais institucionais", "Interfaces responsivas", "Servicos publicos"]
+      }
+    ]
+  },
+  "projects": {
+    "section_title": "Projeto principal",
+    "electios": {
+      "label": "Plataforma em escala nacional",
+      "lead": "Plataforma de eleições online utilizada por OAB GO, OAB MT, OAB RJ e outras instituições. O produto combina experiencia eleitoral, auditoria operacional, comunicação em massa e automações inteligentes para pleitos com mais de 50 mil eleitores.",
+      "cta_primary": "Conheça o Electios",
+      "cta_secondary": "Conversar sobre outros projetos",
+      "metrics": {
+        "voters": "eleitores em pleitos operados",
+        "oab": "GO, MT, RJ e outras seccionais",
+        "ai": "operações em linguagem natural",
+        "uptime": "foco em disponibilidade e resposta"
+      },
+      "capabilities": [
+        {
+          "title": "Votação em tempo real",
+          "description": "Acompanhamento de votos, filas e eventos de pleito com foco em confiabilidade operacional."
+        },
+        {
+          "title": "Comunicação multicanal",
+          "description": "Notificações por email, SMS e WhatsApp para orientar eleitores e equipes durante a jornada."
+        },
+        {
+          "title": "Operações com IA",
+          "description": "Comandos em linguagem natural para apoiar rotinas administrativas e reduzir fricção operacional."
+        },
+        {
+          "title": "Infraestrutura resiliente",
+          "description": "Oracle Cloud, PostgreSQL e Cloudflare compondo uma base segura para eventos sensíveis."
+        }
+      ]
+    }
+  },
+  "contact": {
+    "title": "Contato",
+    "tagline": "Aberto a conversas sobre sistemas criticos, produtos de alta responsabilidade e oportunidades que demandam senioridade tecnica real."
+  },
+  "footer": {
+    "copyright": "© 2026 Luys Fernnando. Todos os direitos reservados.",
+    "back_to_top": "Voltar ao Início"
+  }
+}
