@@ -52,6 +52,10 @@ const Label = styled.div`
 const ProjectTitle = styled.h3`
   font-size: clamp(2.4rem, 6vw, 5.8rem);
   margin-bottom: 1rem;
+
+  @media (max-width: 860px) {
+    text-align: center;
+  }
 `;
 
 const ProjectLead = styled.p`
@@ -59,6 +63,10 @@ const ProjectLead = styled.p`
   font-size: 1.15rem;
   line-height: 1.75;
   margin: 0;
+
+  @media (max-width: 860px) {
+    text-align: center;
+  }
 `;
 
 const MetricPanel = styled.div`
@@ -126,6 +134,11 @@ const CapabilityCard = styled(motion.div)`
     color: ${({ theme }) => theme.colors.textSecondary};
     margin: 0;
   }
+
+  @media (max-width: 620px) {
+    min-height: 0;
+    padding: 1.25rem;
+  }
 `;
 
 const StackBand = styled.div`
@@ -140,6 +153,34 @@ const CaseActions = styled.div`
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1.5rem;
+
+  @media (max-width: 860px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    ${Button} {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+`;
+
+const CapabilityCardHeader = styled.div`
+  @media (max-width: 620px) {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
+
+    svg {
+      flex-shrink: 0;
+      margin-bottom: 0 !important;
+    }
+
+    h4 {
+      margin-bottom: 0;
+    }
+  }
 `;
 
 const stack = ['Elixir', 'Phoenix', 'LiveView', 'Ash-Framework', 'PostgreSQL', 'Oracle Cloud', 'IA'];
@@ -216,8 +257,10 @@ export const Projects: React.FC = () => {
             <CapabilityGrid>
               {e.capabilities.map((cap, i) => (
                 <CapabilityCard key={cap.title} variants={itemVariants}>
-                  {capabilityIcons[i]}
-                  <h4>{cap.title}</h4>
+                  <CapabilityCardHeader>
+                    {capabilityIcons[i]}
+                    <h4>{cap.title}</h4>
+                  </CapabilityCardHeader>
                   <p>{cap.description}</p>
                 </CapabilityCard>
               ))}

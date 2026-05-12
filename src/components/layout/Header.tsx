@@ -186,6 +186,12 @@ const MobileSocialLinks = styled.div`
   margin-top: 1rem;
 `;
 
+const DesktopOnly = styled.div`
+  @media (max-width: 860px) {
+    display: none;
+  }
+`;
+
 const LangWrapper = styled.div`
   position: relative;
 `;
@@ -376,7 +382,9 @@ export const Header: React.FC = () => {
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </IconButton>
 
-            <LangDropdown />
+            <DesktopOnly>
+              <LangDropdown />
+            </DesktopOnly>
 
             <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)} whileTap={{ scale: 0.95 }} aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}>
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -393,6 +401,8 @@ export const Header: React.FC = () => {
                 {t(item.labelKey)}
               </MobileNavLink>
             ))}
+            <LangDropdown />
+
             <MobileSocialLinks aria-label="Social links">
               <SocialLink href="https://github.com/luysfernnando" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                 <FaGithub size={22} />

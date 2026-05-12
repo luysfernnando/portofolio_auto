@@ -8,6 +8,11 @@ import { useLanguage } from '../../context/LanguageContext';
 const StackBlock = styled(motion.div)`
   padding-bottom: 4rem;
   margin-bottom: 5rem;
+
+  @media (max-width: 860px) {
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 const StackLayout = styled.div`
@@ -31,6 +36,10 @@ const StackTitle = styled(motion.h2)`
   line-height: 1.0;
   color: ${({ theme }) => theme.colors.text};
   margin-bottom: 1.5rem;
+
+  @media (max-width: 860px) {
+    text-align: center;
+  }
 `;
 
 const StackTagline = styled(motion.p)`
@@ -38,6 +47,11 @@ const StackTagline = styled(motion.p)`
   font-size: 1.05rem;
   line-height: 1.75;
   max-width: 44ch;
+
+  @media (max-width: 860px) {
+    text-align: center;
+    max-width: 100%;
+  }
 `;
 
 const StackTable = styled.div`

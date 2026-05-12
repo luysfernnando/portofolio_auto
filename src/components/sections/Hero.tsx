@@ -102,7 +102,13 @@ const Stats = styled(motion.div)`
   }
 `;
 
-const StatItem = styled.div``;
+const StatItem = styled.div`
+  @media (max-width: 480px) {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+`;
 
 const StatNumber = styled.div`
   font-family: 'Newsreader', Georgia, serif;
@@ -110,6 +116,13 @@ const StatNumber = styled.div`
   line-height: 1;
   color: ${({ theme }) => theme.colors.primary};
   margin-bottom: 0.6rem;
+
+  @media (max-width: 480px) {
+    margin-bottom: 0;
+    font-size: clamp(1.9rem, 8vw, 2.4rem);
+    flex-shrink: 0;
+    min-width: 5.5rem;
+  }
 `;
 
 const StatLabel = styled.div`

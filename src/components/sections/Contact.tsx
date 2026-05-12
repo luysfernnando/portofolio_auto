@@ -29,6 +29,10 @@ const ContactTitle = styled(motion.h2)`
   line-height: 1.0;
   color: ${({ theme }) => theme.colors.text};
   margin-bottom: 1.5rem;
+
+  @media (max-width: 860px) {
+    text-align: center;
+  }
 `;
 
 const Tagline = styled(motion.p)`
@@ -36,6 +40,11 @@ const Tagline = styled(motion.p)`
   font-size: 1.05rem;
   line-height: 1.75;
   max-width: 44ch;
+
+  @media (max-width: 860px) {
+    text-align: center;
+    max-width: 100%;
+  }
 `;
 
 const ContactList = styled.div`

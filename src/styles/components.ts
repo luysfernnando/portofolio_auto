@@ -15,7 +15,7 @@ export const Section = styled.section`
   padding: 6rem 0;
 
   @media (max-width: 768px) {
-    padding: 4rem 0;
+    padding: 2.5rem 0;
   }
 `;
 
@@ -29,6 +29,8 @@ export const SectionTitle = styled(motion.h2)`
 
   @media (max-width: 768px) {
     margin-bottom: 1.5rem;
+    text-align: center;
+    max-width: 100%;
   }
 `;
 

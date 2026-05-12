@@ -16,6 +16,10 @@ const ExperienceHeader = styled(motion.div)`
 const ExperienceTitle = styled.h2`
   font-size: clamp(2rem, 5vw, 4rem);
   margin-bottom: 0;
+
+  @media (max-width: 680px) {
+    text-align: center;
+  }
 `;
 
 const TimelineStats = styled(motion.div)`
@@ -49,6 +53,19 @@ const TimelineStat = styled.div`
   span {
     color: ${({ theme }) => theme.colors.textSecondary};
     font-size: 0.85rem;
+  }
+
+  @media (max-width: 680px) {
+    display: flex;
+    align-items: center;
+    gap: 0;
+
+    strong {
+      margin-bottom: 0;
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      flex-shrink: 0;
+      min-width: 5.5rem;
+    }
   }
 `;
 
@@ -95,6 +112,10 @@ const CardMeta = styled.div`
   align-items: flex-end;
   gap: 0.25rem;
   flex-shrink: 0;
+
+  @media (max-width: 520px) {
+    align-items: flex-start;
+  }
 `;
 
 const RoleLabel = styled.div`
