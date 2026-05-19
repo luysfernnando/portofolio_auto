@@ -130,6 +130,11 @@
     "title": "Contato",
     "tagline": "Aberto a conversas sobre sistemas criticos, produtos de alta responsabilidade e oportunidades que demandam senioridade tecnica real."
   },
+  "lang": {
+    "en_US": "Inglês (US)",
+    "pt_BR": "Português (BR)",
+    "es_ES": "Espanhol"
+  },
   "footer": {
     "copyright": "© 2026 Luys Fernnando. Todos os direitos reservados.",
     "back_to_top": "Voltar ao Início"

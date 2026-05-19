@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useThemeContext } from '../../context/ThemeContext';
-import { type Locale, useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown, Menu, Moon, Sun, X } from 'lucide-react';
+import { Menu, Moon, Sun, X } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { LocaleSwitcher } from '../ui/LocaleSwitcher';
 
 const HeaderContainer = styled(motion.header)<{ $scrolled: boolean }>`
   position: fixed;
@@ -192,147 +193,12 @@ const DesktopOnly = styled.div`
   }
 `;
 
-const LangWrapper = styled.div`
-  position: relative;
-`;
-
-const LangButton = styled(motion.button)`
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0 0.65rem;
-  height: 2.5rem;
-  border-radius: 999px;
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.text};
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-
-  @media (max-width: 520px) {
-    height: 2.25rem;
-    padding: 0 0.55rem;
-    font-size: 0.72rem;
-  }
-`;
-
-const LangMenu = styled(motion.div)`
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  min-width: 7.5rem;
-  border-radius: 1rem;
-  background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  box-shadow: 0 1rem 2rem ${({ theme }) => theme.colors.shadow};
-  overflow: hidden;
-  z-index: 100;
-`;
-
-const LangOption = styled.button<{ $active: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  width: 100%;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: ${({ theme, $active }) => $active ? theme.colors.primary : theme.colors.textSecondary};
-  background: ${({ theme, $active }) => $active ? theme.colors.background : 'transparent'};
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.12s, color 0.12s;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.text};
-  }
-`;
-
-const localeOptions: { key: Locale; flag: string; label: string }[] = [
-  { key: 'en_US', flag: '🇺🇸', label: 'EN' },
-  { key: 'pt_BR', flag: '🇧🇷', label: 'PT' },
-  { key: 'es_ES', flag: '🇪🇸', label: 'ES' },
-];
-
 const navItems = [
   { labelKey: 'nav.home', id: 'home' },
   { labelKey: 'nav.experience', id: 'experiencia' },
   { labelKey: 'nav.projects', id: 'electios' },
   { labelKey: 'nav.contact', id: 'contact' },
 ];
-
-const LangDropdown: React.FC = () => {
-  const { locale, setLocale } = useLanguage();
-  const [open, setOpen] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onMouseDown = (e: MouseEvent) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
-    document.addEventListener('mousedown', onMouseDown);
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('mousedown', onMouseDown);
-      document.removeEventListener('keydown', onKey);
-    };
-  }, []);
-
-  const current = localeOptions.find(l => l.key === locale)!;
-
-  return (
-    <LangWrapper ref={wrapperRef}>
-      <LangButton
-        onClick={() => setOpen(prev => !prev)}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        aria-label="Select language"
-        aria-expanded={open}
-      >
-        <span>{current.flag}</span>
-        <span>{current.label}</span>
-        <motion.span
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          style={{ display: 'flex', alignItems: 'center' }}
-        >
-          <ChevronDown size={12} style={{ opacity: 0.6 }} />
-        </motion.span>
-      </LangButton>
-
-      <AnimatePresence>
-        {open && (
-          <LangMenu
-            initial={{ opacity: 0, y: -6, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.96 }}
-            transition={{ duration: 0.15 }}
-          >
-            {localeOptions.map(opt => (
-              <LangOption
-                key={opt.key}
-                $active={opt.key === locale}
-                onClick={() => { setLocale(opt.key); setOpen(false); }}
-              >
-                <span>{opt.flag}</span>
-                <span>{opt.label}</span>
-              </LangOption>
-            ))}
-          </LangMenu>
-        )}
-      </AnimatePresence>
-    </LangWrapper>
-  );
-};
 
 export const Header: React.FC = () => {
   const { isDark, toggleTheme } = useThemeContext();
@@ -383,7 +249,7 @@ export const Header: React.FC = () => {
             </IconButton>
 
             <DesktopOnly>
-              <LangDropdown />
+              <LocaleSwitcher />
             </DesktopOnly>
 
             <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)} whileTap={{ scale: 0.95 }} aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}>
@@ -401,7 +267,7 @@ export const Header: React.FC = () => {
                 {t(item.labelKey)}
               </MobileNavLink>
             ))}
-            <LangDropdown />
+            <LocaleSwitcher />
 
             <MobileSocialLinks aria-label="Social links">
               <SocialLink href="https://github.com/luysfernnando" target="_blank" rel="noopener noreferrer" aria-label="GitHub">

@@ -130,6 +130,11 @@
     "title": "Contact",
     "tagline": "Open to conversations about critical systems, high-responsibility products and opportunities that demand real technical seniority."
   },
+  "lang": {
+    "en_US": "English (US)",
+    "pt_BR": "Portuguese (BR)",
+    "es_ES": "Spanish"
+  },
   "footer": {
     "copyright": "© 2026 Luys Fernnando. All rights reserved.",
     "back_to_top": "Back to Top"
